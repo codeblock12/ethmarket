@@ -1,4 +1,4 @@
-# eth-head
+# eth-vids
 
 ## Project setup
 ```
