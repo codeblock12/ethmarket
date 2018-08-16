@@ -16,12 +16,11 @@ contract MarketPlace {
     uint storefrontCount;
 
     struct Storefront {
-        uint id; //also used as index in storefronts array
+        uint storefrontId; //also used as index in storefronts array
         address owner;
         uint balance;
         string name;
         bool isActive;
-        Product[] products;
     }
 
     struct Product {
@@ -33,13 +32,23 @@ contract MarketPlace {
         ProductStatus status;
     }
 
+    struct Order {
+        uint orderId;
+        uint productId;
+        uint storefrontId;
+        uint datetime;
+        uint quantity;
+        uint price;
+    }
+
     // Product storage
 
-    mapping (address => Product[]) public shopper;
+    mapping (uint => Product[]) public products;
+
+    mapping (address => Order[]) public orders;
 
     enum ProductStatus {
         Cancelled,
-        Sold,
         Listed
     }
     
@@ -64,9 +73,9 @@ contract MarketPlace {
     
     modifier isShopperOnly(){ require(role[msg.sender] == shopperRole); _;}
 
-    modifier productAvailable (uint _storefrontId, uint _productId, uint _quantity) { require(storefronts[_storefrontId].products[_productId].quantity > _quantity); _; }
+    modifier productAvailable (uint _storefrontId, uint _productId, uint _quantity) { require(products[_storefrontId][_productId].quantity > _quantity); _; }
 
-    modifier paidEnough (uint _storefrontId, uint _productId, uint _quantity) { require(msg.value > storefronts[_storefrontId].products[_productId].price * _quantity); _; }
+    modifier paidEnough (uint _storefrontId, uint _productId, uint _quantity) { require(msg.value > products[_storefrontId][_productId].price * _quantity); _; }
 
     constructor() public {
         owner = msg.sender;
@@ -111,50 +120,47 @@ contract MarketPlace {
 
     // Store Owner Actions
 
-    function createStorefront(string storeName) isStoreOwnerOnly returns (bool success) {
+    function createStorefront(string storeName) public isStoreOwnerOnly returns (bool success) {
        storefronts.push(Storefront({
-            id: storefrontCount,
+            storefrontId: storefrontCount,
             owner: msg.sender,
             name: storeName,
             balance: 0,
-            isActive: true,
-            products: new Product[](0)
+            isActive: true
        }));
 
        storefrontCount += 1;
        return true;
     }
 
-    function deactivateStorefront(uint _storefrontId) ownsStorefront(_storefrontId) returns (bool success) {
+    function deactivateStorefront(uint _storefrontId) public ownsStorefront(_storefrontId) returns (bool success) {
         storefronts[_storefrontId].isActive = false;
         return true;
     }
 
-    function modifyStorefrontName(uint _storefrontId, string _name) ownsStorefront(_storefrontId) returns (bool success) {
+    function modifyStorefrontName(uint _storefrontId, string _name) public ownsStorefront(_storefrontId) returns (bool success) {
         storefronts[_storefrontId].name = _name;
         return true;
     }
 
-    function addProduct(uint _storefrontId, string _name, uint _price, uint _quantity) ownsStorefront(_storefrontId) returns (bool success) {
-        Product memory newProduct = Product({
+    function addProduct(uint _storefrontId, string _name, uint _price, uint _quantity) public ownsStorefront(_storefrontId) returns (bool success) {       
+        products[_storefrontId].push(Product({
             storefrontId: _storefrontId,
-            productId: storefronts[_storefrontId].products.length,
+            productId: products[_storefrontId].length,
             name: _name,
             price: _price,
             quantity: _quantity,
             status: ProductStatus.Listed
-        });
-        
-        storefronts[_storefrontId].products.push(newProduct);
+        }));
         return true;
     }
 
-    function deactivateProduct(uint _storefrontId, uint _productId) ownsStorefront(_storefrontId) returns (bool success) {
-        storefronts[_storefrontId].products[_productId].status = ProductStatus.Cancelled;
+    function deactivateProduct(uint _storefrontId, uint _productId) public ownsStorefront(_storefrontId) returns (bool success) {
+        products[_storefrontId][_productId].status = ProductStatus.Cancelled;
         return true;        
     }
 
-    function withdrawStoreFunds(uint _storefrontId) ownsStorefront(_storefrontId) returns (bool success) {
+    function withdrawStoreFunds(uint _storefrontId) public ownsStorefront(_storefrontId) returns (bool success) {
         Storefront storage store = storefronts[_storefrontId];
         uint previousBalance = store.balance;
         store.balance = 0;
@@ -168,25 +174,29 @@ contract MarketPlace {
     // Shopper Actions
 
     function buyProduct(uint _storefrontId, uint _productId, uint _quantity) 
+        public
         productAvailable(_storefrontId, _productId, _quantity) 
-        paidEnough(_storefrontId, _productId, _quantity)
-        public 
+        paidEnough(_storefrontId, _productId, _quantity) 
         payable 
         returns (bool success) 
     {      
         // Dededuct from seller
-        storefronts[_storefrontId].products[_productId].quantity -= _quantity;
+        products[_storefrontId][_productId].quantity -= _quantity;
         storefronts[_storefrontId].balance += msg.value;
 
         // Transfer product
-        Product memory p = storefronts[_storefrontId].products[_productId];
-        p.quantity = _quantity;
-        p.status = ProductStatus.Sold;
-
-        shopper[msg.sender].push(p);
+        Product memory p = products[_storefrontId][_productId];
+        
+        orders[msg.sender].push(Order({
+            orderId: orders[msg.sender].length,
+            productId: p.productId,
+            storefrontId: p.storefrontId,
+            datetime: now,
+            quantity: _quantity,
+            price: p.price
+        }));
 
         return true;
     }
-
 }
 
