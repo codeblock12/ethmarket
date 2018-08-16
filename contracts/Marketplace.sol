@@ -53,13 +53,15 @@ contract MarketPlace {
     }
     
     // events
-    event StorefrontCreate();
-    event StorefrontRemoved();
-    event StoreBalanceWithdrawn();
-    event ProductAdded();
-    event ProductModified();
-    event ProductRemoved();
-    event ProductPurchased();
+
+
+    event StorefrontCreate(uint storefrontId);
+    event StorefrontNameModified(uint storefrontId);
+    event StorefrontRemoved(uint storefrontId);
+    event StoreBalanceWithdrawn(uint storefrontId, uint amountWithdrawn);
+    event ProductAdded(uint storefrontId, uint productId);
+    event ProductDeactivated(uint storefrontId, uint productId);
+    event ProductPurchased(uint storefrontId, uint productId, uint orderId);
 
     // modififiers
 
@@ -152,11 +154,13 @@ contract MarketPlace {
             quantity: _quantity,
             status: ProductStatus.Listed
         }));
+        emit ProductAdded(_storefrontId, products[_storefrontId].length);
         return true;
     }
 
     function deactivateProduct(uint _storefrontId, uint _productId) public ownsStorefront(_storefrontId) returns (bool success) {
         products[_storefrontId][_productId].status = ProductStatus.Cancelled;
+        emit ProductDeactivated(_storefrontId, _productId);
         return true;        
     }
 
@@ -165,9 +169,9 @@ contract MarketPlace {
         uint previousBalance = store.balance;
         store.balance = 0;
         if(!storefronts[_storefrontId].owner.send(store.balance)) {
-            store.balance = previousBalance;
+            revert();
         }
-        
+        emit StoreBalanceWithdrawn(_storefrontId, previousBalance);   
         return true;        
     }
 
@@ -195,6 +199,8 @@ contract MarketPlace {
             quantity: _quantity,
             price: p.price
         }));
+
+        emit ProductPurchased(_storefrontId, _productId, orders[msg.sender].length);
 
         return true;
     }
