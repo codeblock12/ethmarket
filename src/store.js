@@ -1,23 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { default as Web3 } from 'web3'
-import { default as contract } from 'truffle-contract'
-
-import marketplaceArtifact from '../build/contracts/Marketplace.json'
+import Marketplace from 'blockchainService.js';
 
 Vue.use(Vuex);
-
-const Role = {
-  Admin: 0,
-  StorefrontOwner: 1,
-  Shopper: 2
-};
-
-const web3 = new Web3(Web3.givenProvider);
-
-const Marketplace = contract(marketplaceArtifact);
-Marketplace.setProvider(web3.currentProvider);
 
 export default new Vuex.Store({
   state: {

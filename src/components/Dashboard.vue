@@ -1,12 +1,26 @@
 <template>
   <div>
-    <h1>{{ msg }}</h1>
-    <div>You are logged in as: {{account}}</div>
-    <div>Your role: {{role}}</div>
+    <div>
+      <h1>{{ msg }}</h1>
+      <div>You are logged in as: {{account}}</div>
+      <button @click="getCurrentAccount" >Load Account</button>
+    </div>
 
-    <button @click="getCurrentAccount" >Load Account</button>
-    <button @click="getAccountRole" >Load Role</button>
+    <div>
+        <label>Get role:</label> <input v-model="addressInput"/>
+        <div>Role: {{role}}</div>
+        <button @click="getAccountRole"> Get Role</button>
+    </div>
 
+    <div>
+        <label>Create Admin:</label> <input v-model="addAdminInput"/>
+        <button @click="addAdmin" >Add Admin</button>
+    </div>
+
+    <div>
+        <label>Remove Admin:</label> <input v-model="removeAdminnInput"/>
+        <button @click="removeAdmin" >Remove Admin</button>
+    </div>
   </div>
 </template>
 
@@ -24,7 +38,9 @@ export default {
   }),
   methods: mapActions([
     'getCurrentAccount',
-    'getAccountRole'
+    'getAccountRole',
+    'addAdmin',
+    'removeAdmin'
   ])
 }
 </script>
