@@ -7,7 +7,7 @@
     </div>
 
     <div>
-        <label>Get role:</label> <input v-model="addressInput"/>
+        <label>Get role:</label> <input v-model="roleAddressInput"/>
         <div>Role: {{role}}</div>
         <button @click="getAccountRole"> Get Role</button>
     </div>
@@ -31,6 +31,13 @@ export default {
   name: 'Dashboard',
   props: {
     msg: String
+  },
+  data() {
+    return {
+      roleAddressInput: '',
+      addAdminInput: '',
+      removeAdminnInput: ''
+    }
   },
   computed: mapState({
     account: state => state.currentAccount,

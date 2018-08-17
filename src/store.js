@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Blockchain from './services/blockchain';
+import Marketplace from './services/marketplace.js';
 
-import Marketplace from 'blockchainService.js';
+let market = new Marketplace();
+let blockchain = new Blockchain();
 
 Vue.use(Vuex);
 
@@ -24,21 +27,13 @@ export default new Vuex.Store({
   },
   actions: {
     getCurrentAccount(context){
-      web3.eth.getAccounts(function(err, accs){
-        if(!err) {
-          context.commit('setCurrentAccount', accs[0]);
-        } else {
-          console.error('err', err);
-        }
-      });
+      blockchain.getCurrentAccount()
+      .then( account => context.commit('setCurrentAccount', account));
     },
     getAccountBalance(){},
     getAccountRole(context){
-      Marketplace.deployed().then(function(instance){
-        instance.role.call(context.state.currentAccount).then(function(role){
-          context.commit('setAccountRole', role.toNumber());
-        })
-      })
+      market.role.call(context.state.currentAccount)
+      .then(role => context.commit('setAccountRole', role.toNumber()))
     }
   }
 })

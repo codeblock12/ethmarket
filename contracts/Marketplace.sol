@@ -89,11 +89,6 @@ contract Marketplace {
     function() public payable {
         revert();
     }
-
-    // General Actions
-    function getRole () public view returns (uint8) {
-        return role[msg.sender];
-    }
     
     // Owner Actions
     function addAdmin(address _adminAddress) public isOwnerOnly returns (bool success){
