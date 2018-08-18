@@ -10,9 +10,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentAccount: 'No Account Detected',
-    accountBalance: null,
-    accountRole: null
+    currentAccount: web3.eth.accounts[0] || 'Account Loading...',
+    accountRole: 'Role Loading...'
   },
   mutations: {
     setCurrentAccount(state, account){
@@ -28,11 +27,13 @@ export default new Vuex.Store({
   actions: {
     getCurrentAccount(context){
       blockchain.getCurrentAccount()
-      .then( account => context.commit('setCurrentAccount', account));
+      .then( account => { 
+        context.commit('setCurrentAccount', account)
+      });
     },
     getAccountBalance(){},
     getAccountRole(context){
-      market.role.call(context.state.currentAccount)
+      market.getAccountRoleByAddress(context.state.currentAccount)
       .then(role => context.commit('setAccountRole', role.toNumber()))
     }
   }

@@ -5,9 +5,9 @@ contract Marketplace {
     address owner;
 
     // role storage
-    uint8 adminRole = 0;
+    uint8 shopperRole = 0;
     uint8 storeOwnerRole = 1;
-    uint8 shopperRole = 2;
+    uint8 adminRole = 2;
 
     mapping (address => uint8) public role;
 
