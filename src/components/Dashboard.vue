@@ -70,18 +70,11 @@ export default {
   },
   mounted(){
     var self = this
-    getCurrentAccount(self)
-    window.web3.currentProvider.publicConfigStore.on('update', function(){ 
-      getCurrentAccount(self) 
-    })
+    self.$store.dispatch('getCurrentAccount')
+    window.web3.currentProvider.publicConfigStore
+    .on('update', () => self.$store.dispatch('getCurrentAccount') )
   }
 }
-
-function getCurrentAccount(vm) {
-    vm.$store.dispatch('getCurrentAccount');
-    vm.$store.dispatch('getCurrentRole');  
-}
-
 </script>
 
 <style scoped>

@@ -26,25 +26,23 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getCurrentAccount(context){
-      blockchain.getCurrentAccount()
-      .then( account => { 
-        context.commit('setCurrentAccount', account)
-      });
-    },
-    getCurrentRole(context){
+    getCurrentAccount({ commit, dispatch, state }){
       market.init()
-      .then( instance => {
-        market.getRoleByAddress(context.state.currentAccount)
-        .then(role => context.commit('setAccountRole', role.toNumber()))
+      .then( instance => {  
+        blockchain.getCurrentAccount()
+        .then( account => { 
+          commit('setCurrentAccount', account)
+          market.getRoleByAddress(account)
+          .then(role => commit('setAccountRole', role.toNumber()))          
+        })          
       })
     },
-    setAdminRole(context, address){
-      market.setAdminRoleByAddress(address, context.state.currentAccount)
+    setAdminRole({ state }, address){
+      market.setAdminRoleByAddress(address, state.currentAccount)
       .then(success => console.log('successfully set admin role'))
     },
-    removeAdminRole(context, address){
-      market.removeAdminRoleByAddress(address, context.state.currentAccount)
+    removeAdminRole({ state }, address){
+      market.removeAdminRoleByAddress(address, state.currentAccount)
       .then(success => console.log('successfully remove admin role'))
     }          
   }

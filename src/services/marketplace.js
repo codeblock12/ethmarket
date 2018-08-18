@@ -3,6 +3,8 @@ import marketplaceArtifact from '../../build/contracts/Marketplace.json'
 
 const web3 = window.web3;
 
+const defaultGasLimit = 50000;
+
 export default class Marketplace {
     constructor () {
         let self = this;
@@ -32,7 +34,7 @@ export default class Marketplace {
     setAdminRoleByAddress (address, caller) {
         let self = this;
         return new Promise (function (resolve, reject) {
-          self.instance.addAdmin(address, {from: caller})
+          self.instance.addAdmin(address, {from: caller, gas: defaultGasLimit})
           .then( role => resolve(role))
           .catch ( err => reject(err))
         }) 
@@ -41,7 +43,7 @@ export default class Marketplace {
     removeAdminRoleByAddress (address, caller) {
       let self = this;
       return new Promise (function (resolve, reject) {
-        self.instance.removeAdmin(address, {from: caller})
+        self.instance.removeAdmin(address, {from: caller, gas: defaultGasLimit})
         .then( role => resolve(role))
         .catch ( err => reject(err))
       }) 
