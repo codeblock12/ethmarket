@@ -4,7 +4,6 @@
       <h1>{{ msg }}</h1>
       <div>You are logged in as: {{account}}</div>
       <div>Role: {{currentAccountRoleLabel}}</div>
-      <button @click="getCurrentRole(account)"> Get Role</button>
     </div>
 
     <div>
@@ -60,7 +59,6 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getCurrentRole',
       'setAdminRole',
       'removeAdminRole'
     ]),
@@ -71,15 +69,19 @@ export default {
     }
   },
   mounted(){
-    let self = this;
-    this.$store.dispatch('getCurrentAccount');
-    this.$store.dispatch('getCurrentRole');
-    window.web3.currentProvider.publicConfigStore.on('update', function(){
-      self.$store.dispatch('getCurrentAccount');
-      self.$store.dispatch('getCurrentRole');
-    });
+    var self = this
+    getCurrentAccount(self)
+    window.web3.currentProvider.publicConfigStore.on('update', function(){ 
+      getCurrentAccount(self) 
+    })
   }
 }
+
+function getCurrentAccount(vm) {
+    vm.$store.dispatch('getCurrentAccount');
+    vm.$store.dispatch('getCurrentRole');  
+}
+
 </script>
 
 <style scoped>

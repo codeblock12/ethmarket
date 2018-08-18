@@ -33,8 +33,11 @@ export default new Vuex.Store({
       });
     },
     getCurrentRole(context){
-      market.getRoleByAddress(context.state.currentAccount)
-      .then(role => context.commit('setAccountRole', role.toNumber()))
+      market.init()
+      .then( instance => {
+        market.getRoleByAddress(context.state.currentAccount)
+        .then(role => context.commit('setAccountRole', role.toNumber()))
+      })
     },
     setAdminRole(context, address){
       market.setAdminRoleByAddress(address, context.state.currentAccount)

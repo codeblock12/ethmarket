@@ -8,9 +8,16 @@ export default class Marketplace {
         let self = this;
         self.contract = contract(marketplaceArtifact)
         self.contract.setProvider(web3.currentProvider)
-        self.contract.deployed().then(instance => {
-          self.instance = instance
-        }).catch(err => console.error('marketplace service erred: ', err))
+        self.init().then(instance => self.instance = instance)
+    }
+
+    init() {
+      let self = this;
+      return new Promise (function (resolve, reject) {
+        self.contract.deployed()
+        .then(instance => resolve(instance))
+        .catch ( err => reject(err))
+      })       
     }
 
     getRoleByAddress (address) {
