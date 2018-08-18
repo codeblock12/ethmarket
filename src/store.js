@@ -44,6 +44,14 @@ export default new Vuex.Store({
     removeAdminRole({ state }, address){
       market.removeAdminRoleByAddress(address, state.currentAccount)
       .then(success => console.log('successfully remove admin role'))
-    }          
+    },
+    setStoreOwnerRole({ state }, address){
+      market.setStoreOwnerByAddress(address, state.currentAccount)
+      .then(success => console.log('successfully set admin role'))
+    },
+    removeStoreOwnerRole({ state }, address){
+      market.removeStoreOwnerByAddress(address, state.currentAccount)
+      .then(success => console.log('successfully remove admin role'))
+    }                 
   }
 })
