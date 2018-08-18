@@ -2,7 +2,7 @@ pragma solidity ^0.4.23;
 
 contract Marketplace {
     
-    address owner;
+    address public owner;
 
     // role storage
     uint8 shopperRole = 0;

@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Blockchain from './services/blockchain';
-import Marketplace from './services/marketplace.js';
+import Marketplace from './services/marketplace';
+import { waitForAsync } from './utilities';
 
 let market = new Marketplace();
 let blockchain = new Blockchain();
@@ -31,10 +32,17 @@ export default new Vuex.Store({
         context.commit('setCurrentAccount', account)
       });
     },
-    getAccountBalance(){},
-    getAccountRole(context){
-      market.getAccountRoleByAddress(context.state.currentAccount)
+    getCurrentRole(context){
+      market.getRoleByAddress(context.state.currentAccount)
       .then(role => context.commit('setAccountRole', role.toNumber()))
-    }
+    },
+    setAdminRole(context, address){
+      market.setAdminRoleByAddress(address, context.state.currentAccount)
+      .then(success => console.log('successfully set admin role'))
+    },
+    removeAdminRole(context, address){
+      market.removeAdminRoleByAddress(address, context.state.currentAccount)
+      .then(success => console.log('successfully remove admin role'))
+    }          
   }
 })

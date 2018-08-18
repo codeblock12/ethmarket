@@ -2,7 +2,6 @@ import { default as contract } from 'truffle-contract'
 import marketplaceArtifact from '../../build/contracts/Marketplace.json'
 
 const web3 = window.web3;
-const caller = web3.eth.accounts[0];
 
 export default class Marketplace {
     constructor () {
@@ -14,7 +13,7 @@ export default class Marketplace {
         }).catch(err => console.error('marketplace service erred: ', err))
     }
 
-    getAccountRoleByAddress (address) {
+    getRoleByAddress (address) {
       let self = this;
       return new Promise (function (resolve, reject) {
         self.instance.role.call(address)
@@ -23,12 +22,21 @@ export default class Marketplace {
       }) 
     }
 
-    setAdminRoleByAddress (address) {
+    setAdminRoleByAddress (address, caller) {
         let self = this;
         return new Promise (function (resolve, reject) {
-          self.instance.setAdmin.call(address, {from: caller})
+          self.instance.addAdmin(address, {from: caller})
           .then( role => resolve(role))
           .catch ( err => reject(err))
         }) 
     }
+
+    removeAdminRoleByAddress (address, caller) {
+      let self = this;
+      return new Promise (function (resolve, reject) {
+        self.instance.removeAdmin(address, {from: caller})
+        .then( role => resolve(role))
+        .catch ( err => reject(err))
+      }) 
+  }
 }
