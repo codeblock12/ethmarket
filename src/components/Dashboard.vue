@@ -10,28 +10,6 @@
         <button @click="getRoleByAddress"> Get Role</button>
         Role: {{queriedRoleLabel}}
     </div>
-    <h1>Owner</h1>
-    <div>
-        <label>Create Admin:</label> <input v-model="addAdminInput"/>
-        <button @click="setAdminRole(addAdminInput)" >Add Admin</button>
-    </div>
-    <div>
-        <label>Remove Admin:</label> <input v-model="removeAdminnInput"/>
-        <button @click="removeAdminRole(removeAdminnInput)" >Remove Admin</button>
-    </div>
-    <h1>Admin</h1>
-    <div>
-        <label>Create Storeowner:</label> <input v-model="addStoreOwnerInput"/>
-        <button @click="setStoreOwnerRole(addStoreOwnerInput)" >Add StoreOwner</button>
-    </div>
-    <div>
-        <label>Remove Storeowner:</label> <input v-model="removeStoreOwnerInput"/>
-        <button @click="removeStoreOwnerRole(removeStoreOwnerInput)" >Remove StoreOwner</button>
-    </div>
-    <h1>Shop Owner</h1>
-    <h1>Shopper</h1>
-
-
   </div>
 </template>
 
@@ -51,10 +29,6 @@ export default {
   data() {
     return {
       roleAddressInput: null,
-      addAdminInput: null,
-      removeAdminnInput: null,
-      addStoreOwnerInput: null,
-      removeStoreOwnerInput: null,
       queriedRole: null
     }
   },
@@ -71,23 +45,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'setAdminRole',
-      'removeAdminRole',
-      'setStoreOwnerRole',
-      'removeStoreOwnerRole'
-    ]),
     getRoleByAddress() {
       let self = this;
       market.getRoleByAddress(self.roleAddressInput)
       .then(role => self.queriedRole = role.toNumber())
     }
-  },
-  mounted(){
-    var self = this
-    self.$store.dispatch('getCurrentAccount')
-    window.web3.currentProvider.publicConfigStore
-    .on('update', () => self.$store.dispatch('getCurrentAccount') )
   }
 }
 </script>

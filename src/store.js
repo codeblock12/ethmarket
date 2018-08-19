@@ -12,7 +12,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentAccount: web3.eth.accounts[0] || 'Account Loading...',
-    accountRole: 'Role Loading...'
+    accountRole: 'Role Loading...',
+    storefronts: []
   },
   mutations: {
     setCurrentAccount(state, account){
@@ -23,6 +24,14 @@ export default new Vuex.Store({
     },
     setAccountRole(state, role){
       state.accountRole = role;
+    },
+    setStorefronts(state, storefronts) {
+      state.storefronts = storefronts
+    }    
+  },
+  getters: {
+    getStorefrontsByCurrentAccount(state) {
+      return state.storefronts.map(storefront => storefront.owner === state.currentAccount)
     }
   },
   actions: {
@@ -52,6 +61,14 @@ export default new Vuex.Store({
     removeStoreOwnerRole({ state }, address){
       market.removeStoreOwnerByAddress(address, state.currentAccount)
       .then(success => console.log('successfully remove admin role'))
-    }                 
+    },
+    getStorefronts({ commit } ){
+      market.getStorefronts()
+      .then(storefronts => commit('setStorefronts', storefronts))
+    },    
+    createStorefront({ state }, name){
+      market.createStorefrontByName(name, state.currentAccount)
+      .then(success => console.log('successfully created new storefront'))
+    },                 
   }
 })

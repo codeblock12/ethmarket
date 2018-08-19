@@ -13,6 +13,7 @@ contract Marketplace {
 
     // store owner storage
     Storefront[] public storefronts;
+
     uint storefrontCount;
 
     struct Storefront {
@@ -127,16 +128,19 @@ contract Marketplace {
        }));
 
        storefrontCount += 1;
+       emit StorefrontCreate(storefrontCount);
        return true;
     }
 
     function deactivateStorefront(uint _storefrontId) public ownsStorefront(_storefrontId) returns (bool success) {
         storefronts[_storefrontId].isActive = false;
+        emit StorefrontRemoved(_storefrontId);
         return true;
     }
 
     function modifyStorefrontName(uint _storefrontId, string _name) public ownsStorefront(_storefrontId) returns (bool success) {
         storefronts[_storefrontId].name = _name;
+        emit StorefrontNameModified(_storefrontId);
         return true;
     }
 
