@@ -46,16 +46,14 @@ export default {
       'setStoreOwnerRole',
       'createStorefront'
     ]),
-    getOwnedStorefronts() {
+    async getOwnedStorefronts() {
       let self = this;
-      market.getStorefrontsByAddress(self.currentAccount)
-      .then(storefrontIdList => {
-        self.storefrontsData = [];
-        storefrontIdList.forEach( storefrontId => {
-          market.getStorefrontsById(Number(storefrontId))
-          .then( storefront => self.storefrontsData.push(storefront))
-        })
-      })
+      let storefrontList = await market.getStorefrontsByAddress(self.currentAccount);
+      self.storefrontsData = [];
+      for (const storefrontId of storefrontList) {
+        let storefront = await market.getStorefrontsById(Number(storefrontId))
+        self.storefrontsData.push(storefront);
+      }
     }         
   }
 }
