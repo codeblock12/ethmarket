@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div>You are logged in as: {{account}}</div>
+      <div>You are logged in as: {{currentAccount}}</div>
       <div>Role: {{currentAccountRoleLabel}}</div>
     </div>
     <div>
@@ -61,11 +61,11 @@ export default {
   },
   computed: {
     ...mapState({
-      account: state => state.currentAccount,
-      role: state => state.accountRole
+      currentAccount: state => state.currentAccount,
+      currentRole: state => state.accountRole
     }),
     currentAccountRoleLabel(){
-      return getRoleById(this.role);
+      return getRoleById(this.currentRole);
     },
     queriedRoleLabel() {
       return getRoleById(this.queriedRole);

@@ -29,11 +29,6 @@ export default new Vuex.Store({
       state.storefronts = storefronts
     }    
   },
-  getters: {
-    getStorefrontsByCurrentAccount(state) {
-      return state.storefronts.map(storefront => storefront.owner === state.currentAccount)
-    }
-  },
   actions: {
     getCurrentAccount({ commit, dispatch, state }){
       market.init()

@@ -12,9 +12,12 @@ contract Marketplace {
     mapping (address => uint8) public role;
 
     // store owner storage
-    Storefront[] public storefronts;
 
-    uint storefrontCount;
+    //all storefronts
+    Storefront[] public storefronts;
+    //link to storefrontId by owner address
+    mapping (address => uint[]) public ownedStorefronts;
+    uint public storefrontCount;
 
     struct Storefront {
         uint storefrontId; //also used as index in storefronts array
@@ -83,6 +86,7 @@ contract Marketplace {
     constructor() public {
         owner = msg.sender;
         storefrontCount = 0;
+        role[msg.sender] = adminRole; 
     }
 
     // fallback
@@ -116,9 +120,18 @@ contract Marketplace {
 
     }
 
-    // Store Owner Actions
+    // Storefront
+
+    function getOwnedStorefronts(address account)
+        public
+        view
+        returns (uint[] memory) 
+    {
+        return ownedStorefronts[account];
+    }
 
     function createStorefront(string storeName) public isStoreOwnerOnly returns (bool success) {
+       
        storefronts.push(Storefront({
             storefrontId: storefrontCount,
             owner: msg.sender,
@@ -126,6 +139,8 @@ contract Marketplace {
             balance: 0,
             isActive: true
        }));
+
+       ownedStorefronts[msg.sender].push(storefrontCount);
 
        storefrontCount += 1;
        emit StorefrontCreate(storefrontCount);

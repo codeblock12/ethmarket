@@ -78,11 +78,29 @@ export default class Marketplace {
     })     
   }
 
-  getStorefronts() {
+  getStorefrontsByAddress(address) {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.getOwnedStorefronts.call(address)
+      .then( storefronts => resolve(storefronts))
+      .catch ( err => reject(err))
+    })     
+  }  
+  
+  getStorefrontsById(id) {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.storefronts.call(id)
+      .then( storefront => resolve(storefront))
+      .catch ( err => reject(err))
+    })     
+  }    
+
+  getStorefrontCount() {
     let self = this;
     return new Promise (function (resolve, reject) {
       self.instance.storefronts.call()
-      .then( storefronts => resolve(storefronts))
+      .then( storefrontCount => resolve(storefrontCount))
       .catch ( err => reject(err))
     })     
   }

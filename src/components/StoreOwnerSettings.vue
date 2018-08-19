@@ -6,11 +6,11 @@
         <label>Create Storeowner:</label> <input v-model="storefrontNameInput"/>
         <button @click="createStorefront(storefrontNameInput)" >Add Storefront</button>
     </div>
-    <button @click="getStorefronts" >Get Storefront</button>
+    <button @click="getOwnedStorefronts" >Get Storefront</button>
     <div>
       <h2>Storefronts</h2>
       <ul>
-        <li v-for="store in getStorefrontsByCurrentAccount" :key="store.storefrontId">
+        <li v-for="store in storefronts" :key="store.storefrontId">
           {{store}}
         </li>
       </ul>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 import Marketplace from '../services/marketplace.js';
 let market = new Marketplace();
@@ -29,25 +29,33 @@ export default {
   name: 'StoreOwnerSettings',
   data() {
     return {
-      storefrontNameInput: null
+      storefrontNameInput: null,
+      storefrontsData: []
     }
   },
   computed: {
-    ...mapGetters([
-      'getStorefrontsByCurrentAccount'
-    ])
+    ...mapState({
+      currentAccount: state => state.currentAccount
+    }),    
+    storefronts () {
+      return this.storefrontsData;
+    }
   },
   methods: {
     ...mapActions([
       'setStoreOwnerRole',
-      'createStorefront',
-      'getStorefronts'
+      'createStorefront'
     ]),
-    getRoleByAddress() {
+    getOwnedStorefronts() {
       let self = this;
-      market.getRoleByAddress(self.roleAddressInput)
-      .then(role => self.queriedRole = role.toNumber())
-    }
+      market.getStorefrontsByAddress(self.currentAccount)
+      .then(storefrontIdList => {
+        storefrontIdList.forEach( storefrontId => {
+          market.getStorefrontsById(Number(storefrontId))
+          .then( storefront => self.storefrontsData.push(storefront))
+        })
+      })
+    }         
   }
 }
 </script>
