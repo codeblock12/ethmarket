@@ -50,6 +50,7 @@ export default {
       let self = this;
       market.getStorefrontsByAddress(self.currentAccount)
       .then(storefrontIdList => {
+        self.storefrontsData = [];
         storefrontIdList.forEach( storefrontId => {
           market.getStorefrontsById(Number(storefrontId))
           .then( storefront => self.storefrontsData.push(storefront))
