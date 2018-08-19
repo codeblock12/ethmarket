@@ -30,16 +30,12 @@ export default new Vuex.Store({
     }    
   },
   actions: {
-    getCurrentAccount({ commit, dispatch, state }){
-      market.init()
-      .then( instance => {  
-        blockchain.getCurrentAccount()
-        .then( account => { 
-          commit('setCurrentAccount', account)
-          market.getRoleByAddress(account)
-          .then(role => commit('setAccountRole', role.toNumber()))          
-        })          
-      })
+    async getCurrentAccount({ commit, dispatch, state }){
+      await market.init();
+      let account = await blockchain.getCurrentAccount();
+      commit('setCurrentAccount', account);
+      let role = await market.getRoleByAddress(account);
+      commit('setAccountRole', Number(role))
     },
     setAdminRole({ state }, address){
       market.setAdminRoleByAddress(address, state.currentAccount)
