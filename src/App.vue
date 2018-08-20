@@ -23,12 +23,15 @@ export default {
 </script>
 
 <style>
+body {
+  background-color: #2c3e50
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: white;
 }
 #nav {
   padding: 30px;
@@ -36,7 +39,7 @@ export default {
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: white;
 }
 
 #nav a.router-link-exact-active {
@@ -44,12 +47,17 @@ export default {
 }
 
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  border-radius: 5px; /* 5px rounded corners */
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
   padding: 5px;
   transition: 0.3s;
+  border: 1px solid #d3d3d3;
+  border-radius: .25rem;
+  width: 50%;
+  margin-bottom: 10px;
+  margin: 10px auto;
 }
 .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}	
+    box-shadow: 0 8px 16px 0 rgba(255, 255, 255, 0.2);
+}
 </style>
