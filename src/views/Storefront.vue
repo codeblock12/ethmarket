@@ -3,7 +3,13 @@
 		<button @click="goBack">Go back </button>
 		StoreId: {{storefrontId}}
 		<div>Storefront</div>
-		{{storefront}}
+
+		<div class="card">
+			<div>Storename: {{storefront[storefrontLabel.NAME]}}</div>
+			<div>Owner: {{storefront[storefrontLabel.OWNER]}}</div>
+			<div>Balance: {{balanceInEther}}</div>
+			<div>Is Active: {{storefront[storefrontLabel.IS_ACTIVE]}}</div>
+		</div>
 		
 		<div>
         <label>Rename Storefront:</label> <input v-model="storefrontNameInput"/>
@@ -13,6 +19,10 @@
     <div>
         <button @click="deactiveStorefront" >Deactivate Storefront</button>
 				<button @click="refreshStorefront" >Refresh Storefront</button>
+    </div>
+
+		<div>
+				<button @click="withdrawFunds" >Withdraw Balance</button>
     </div>
 
 		<div>Products</div>
@@ -40,7 +50,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import { toWei } from '../utilities'
+import { toWei, fromWei } from '../utilities'
+import { STOREFRONT } from '../constants'
 
 import Marketplace from '../services/marketplace.js';
 let market = new Marketplace();
@@ -49,7 +60,7 @@ export default {
 	name: 'Storefront',
 	data() {
 		return {
-			storefrontData: null,
+			storefrontData: {},
 			productsData: [],
 			storefrontId: this.$route.params.id,
 			storefrontNameInput: null,
@@ -57,7 +68,8 @@ export default {
 				name: '',
 				price: '',
 				quantity: ''
-			}
+			},
+			storefrontLabel: STOREFRONT
 		}
 	},
 	computed: {
@@ -69,6 +81,9 @@ export default {
 		},
 		products() {
 			return this.productsData;
+		},
+		balanceInEther() {
+			return fromWei(this.storefrontData[STOREFRONT.BALANCE]);
 		}
 	},
 	methods: {

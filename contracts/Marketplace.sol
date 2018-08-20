@@ -202,13 +202,10 @@ contract Marketplace {
     }
 
     function withdrawStoreFunds(uint _storefrontId) public ownsStorefront(_storefrontId) returns (bool success) {
-        Storefront storage store = storefronts[_storefrontId];
-        uint previousBalance = store.balance;
-        store.balance = 0;
-        if(!storefronts[_storefrontId].owner.send(store.balance)) {
+        if(!storefronts[_storefrontId].owner.send(storefronts[_storefrontId].balance)) {
             revert();
         }
-        emit StoreBalanceWithdrawn(_storefrontId, previousBalance);   
+        emit StoreBalanceWithdrawn(_storefrontId, storefronts[_storefrontId].balance);   
         return true;        
     }
 
