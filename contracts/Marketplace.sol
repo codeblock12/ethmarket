@@ -79,7 +79,7 @@ contract Marketplace {
     
     modifier isShopperOnly(){ require(role[msg.sender] == shopperRole); _;}
 
-    modifier productAvailable (uint _storefrontId, uint _productId, uint _quantity) { require(products[_storefrontId][_productId].quantity > _quantity); _; }
+    modifier productAvailable (uint _storefrontId, uint _productId, uint _quantity) { require(products[_storefrontId][_productId].quantity >= _quantity); _; }
 
     modifier paidEnough (uint _storefrontId, uint _productId, uint _quantity) { require(msg.value >= products[_storefrontId][_productId].price * _quantity); _; }
 
@@ -202,7 +202,7 @@ contract Marketplace {
     }
 
     function withdrawStoreFunds(uint _storefrontId) public ownsStorefront(_storefrontId) returns (bool success) {
-        Storefront memory store = storefronts[_storefrontId];
+        Storefront storage store = storefronts[_storefrontId];
         if(storefronts[_storefrontId].owner.send(store.balance)) {
             store.balance = 0;
         } else {
