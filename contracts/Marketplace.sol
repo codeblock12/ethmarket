@@ -172,6 +172,29 @@ contract Marketplace {
         return true;
     }
 
+   function getProductCountByStorefrontId(uint _storefrontId)
+        public
+        view
+        returns (uint size) 
+    {
+        return products[_storefrontId].length;
+    }
+
+   function getProductsByProductId(uint _storefrontId, uint _productId)
+        public
+        view
+        returns (uint, uint, string, uint, uint, ProductStatus) 
+    {
+        Product memory product = products[_storefrontId][_productId];
+        return (
+            product.storefrontId, 
+            product.productId, 
+            product.name, 
+            product.price, 
+            product.quantity, 
+            product.status);
+    }            
+
     function deactivateProduct(uint _storefrontId, uint _productId) public ownsStorefront(_storefrontId) returns (bool success) {
         products[_storefrontId][_productId].status = ProductStatus.Cancelled;
         emit ProductDeactivated(_storefrontId, _productId);

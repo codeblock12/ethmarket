@@ -27,7 +27,7 @@ export default new Vuex.Store({
     },
     setStorefronts(state, storefronts) {
       state.storefronts = storefronts
-    }    
+    } 
   },
   actions: {
     async getCurrentAccount({ commit, dispatch, state }){

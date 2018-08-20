@@ -24,73 +24,83 @@ export default class Marketplace {
     })       
   }
 
-  getRoleByAddress (address) {
+  getRoleByAddress (_address) {
     let self = this;
     return new Promise (function (resolve, reject) {
-      self.instance.role.call(address)
+      self.instance.role.call(_address)
       .then( role => resolve(role))
       .catch ( err => reject(err))
     }) 
   }
 
-  setAdminRoleByAddress (address, caller) {
+  setAdminRoleByAddress (_address, _caller) {
     let self = this;
     return new Promise (function (resolve, reject) {
-      self.instance.addAdmin(address, {from: caller, gas: defaultGasLimit})
+      self.instance.addAdmin(
+        _address, 
+        {from: _caller, gas: defaultGasLimit})
       .then( role => resolve(role))
       .catch ( err => reject(err))
     }) 
   }
 
-  removeAdminRoleByAddress (address, caller) {
+  removeAdminRoleByAddress (_address, _caller) {
     let self = this;
     return new Promise (function (resolve, reject) {
-      self.instance.removeAdmin(address, {from: caller, gas: defaultGasLimit})
+      self.instance.removeAdmin(
+        _address,
+        {from: _caller, gas: defaultGasLimit})
       .then( role => resolve(role))
       .catch ( err => reject(err))
     }) 
   }
 
-  setStoreOwnerByAddress (address, caller) {
+  setStoreOwnerByAddress (_address, _caller) {
     let self = this;
     return new Promise (function (resolve, reject) {
-      self.instance.addStoreOwner(address, {from: caller, gas: defaultGasLimit})
+      self.instance.addStoreOwner(
+        _address,
+        {from: _caller, gas: defaultGasLimit})
       .then( role => resolve(role))
       .catch ( err => reject(err))
     }) 
   }
 
-  removeStoreOwnerByAddress (address, caller) {
+  removeStoreOwnerByAddress (_address, _caller) {
     let self = this;
     return new Promise (function (resolve, reject) {
-      self.instance.removeStoreOwner(address, {from: caller, gas: defaultGasLimit})
+      self.instance.removeStoreOwner(
+        _address, 
+        {from: _caller, gas: defaultGasLimit})
       .then( role => resolve(role))
       .catch ( err => reject(err))
     }) 
   }
 
-  createStorefrontByName(name, caller) {
+  createStorefrontByName(_name, _caller) {
     let self = this;
     return new Promise (function (resolve, reject) {
-      self.instance.createStorefront(name, {from: caller, gas: highGasLimit})
+      self.instance.createStorefront(
+        _name, 
+        {from: _caller, gas: highGasLimit})
       .then( role => resolve(role))
       .catch ( err => reject(err))
     })     
   }
 
-  getStorefrontsByAddress(address) {
+  getStorefrontsByAddress(_address) {
     let self = this;
     return new Promise (function (resolve, reject) {
-      self.instance.getOwnedStorefronts.call(address)
+      self.instance.getOwnedStorefronts.call(_address)
       .then( storefronts => resolve(storefronts))
       .catch ( err => reject(err))
     })     
   }  
   
-  getStorefrontsById(id) {
+  getStorefrontsById(_id) {
     let self = this;
     return new Promise (function (resolve, reject) {
-      self.instance.storefronts.call(id)
+      self.instance.storefronts.call(_id)
       .then( storefront => resolve(storefront))
       .catch ( err => reject(err))
     })     
@@ -103,6 +113,82 @@ export default class Marketplace {
       .then( storefrontCount => resolve(storefrontCount))
       .catch ( err => reject(err))
     })     
+  }
+
+  deactivateStorefront(_storefrontId, _caller) {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.deactivateStorefront(
+        _storefrontId, 
+        {from: _caller, gas: highGasLimit})
+      .then( success => resolve(success))
+      .catch ( err => reject(err))
+    })   
+  }
+
+  renameStorefront(_storefrontId, _name, _caller) {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.modifyStorefrontName(_storefrontId,
+         _name,
+         {from: _caller, gas: highGasLimit})
+      .then( success => resolve(success))
+      .catch ( err => reject(err))
+    })   
+  }
+
+  withdrawStorefrontFunds(_storefrontId, _caller) {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.withdrawStoreFunds(
+        _storefrontId,
+        {from: _caller, gas: highGasLimit})
+      .then( success => resolve(success))
+      .catch ( err => reject(err))
+    })   
+  }
+
+  createProduct(_storefrontId, _productName, _price, _quantity, _caller) {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.addProduct(
+        _storefrontId, 
+        _productName,
+        _price,
+        _quantity,
+        {from: _caller, gas: highGasLimit})
+      .then( success => resolve(success))
+      .catch ( err => reject(err))
+    })   
+  }
+  getProductCountByStorefrontId(_storefrontId) {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.getProductCountByStorefrontId.call(_storefrontId)
+      .then( size => resolve(size))
+      .catch ( err => reject(err))
+    })     
+  }
+
+  getProductById(_storefrontId, _productId) {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.getProductsByProductId(_storefrontId, _productId)
+      .then( product => resolve(product))
+      .catch ( err => reject(err))
+    })     
+  }
+
+  deactivateProduct(_storefrontId, _productId, _caller) {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.deactivateProduct(
+        _storefrontId, 
+        _productId,
+        {from: _caller, gas: highGasLimit})
+      .then( success => resolve(success))
+      .catch ( err => reject(err))
+    })   
   }
 
 }

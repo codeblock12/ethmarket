@@ -1,10 +1,6 @@
 <template>
   <div>
     <div>
-      <div>You are logged in as: {{currentAccount}}</div>
-      <div>Role: {{currentAccountRoleLabel}}</div>
-    </div>
-    <div>
         <label>Role:</label> <input v-model="roleAddressInput"/>
         <button @click="getRoleByAddress"> Get Role</button>
         Role: {{queriedRoleLabel}}
@@ -28,9 +24,6 @@
         <button @click="removeStoreOwnerRole(removeStoreOwnerInput)" >Remove StoreOwner</button>
     </div>
     <StoreOwnerSettings />    
-    <h1>Shopper</h1>
-
-
   </div>
 </template>
 
@@ -83,12 +76,6 @@ export default {
       market.getRoleByAddress(self.roleAddressInput)
       .then(role => self.queriedRole = role.toNumber())
     }
-  },
-  mounted(){
-    var self = this
-    self.$store.dispatch('getCurrentAccount')
-    window.web3.currentProvider.publicConfigStore
-    .on('update', () => self.$store.dispatch('getCurrentAccount') )
   }
 }
 </script>

@@ -10,8 +10,10 @@
     <div>
       <h2>Storefronts</h2>
       <ul>
-        <li v-for="store in storefronts" :key="store.storefrontId">
-          {{store}}
+        <li v-for="(store, index) in storefronts" 
+          :key="index" 
+          @click="goToStorefront(store[0])">
+            {{store}}
         </li>
       </ul>
     </div>
@@ -54,10 +56,10 @@ export default {
         let storefront = await market.getStorefrontsById(Number(storefrontId))
         self.storefrontsData.push(storefront);
       }
+    },
+    goToStorefront(id) {
+      this.$router.push({ path: `storefront/${id}`})
     }         
   }
 }
 </script>
-
-<style scoped>
-</style>
