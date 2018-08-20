@@ -9,19 +9,17 @@
     <button @click="getOwnedStorefronts" >Get Storefront</button>
     <div>
       <h2>Storefronts</h2>
-      <ul>
-        <li v-for="(store, index) in storefronts" 
-          :key="index" 
-          @click="goToStorefront(store[0])">
-            {{store}}
-        </li>
-      </ul>
+      <storefront-card 
+        v-for="(store, index) in storefronts" 
+        :key="index" 
+        :storefront="store"/>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import StorefrontCard from '@/components/StorefrontCard';
 
 import Marketplace from '../services/marketplace.js';
 let market = new Marketplace();
@@ -29,6 +27,9 @@ let market = new Marketplace();
 
 export default {
   name: 'StoreOwnerSettings',
+  components: {
+    StorefrontCard
+  },
   data() {
     return {
       storefrontNameInput: null,
@@ -56,10 +57,7 @@ export default {
         let storefront = await market.getStorefrontsById(Number(storefrontId))
         self.storefrontsData.push(storefront);
       }
-    },
-    goToStorefront(id) {
-      this.$router.push({ path: `storefront/${id}`})
-    }         
+    }    
   }
 }
 </script>

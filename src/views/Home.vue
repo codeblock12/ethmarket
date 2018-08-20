@@ -1,17 +1,18 @@
 <template>
   <div class="home">
-    <Dashboard msg="Welcome to the Eth Market App"/>
+    <StorefrontCard msg="Welcome to the Eth Market App"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Dashboard from '@/components/Dashboard.vue'
+import StorefrontCard from '@/components/StorefrontCard.vue'
+
 
 export default {
   name: 'home',
   components: {
-    Dashboard
+    StorefrontCard
   }
 }
 </script>

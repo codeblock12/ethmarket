@@ -214,6 +214,30 @@ contract Marketplace {
 
     // Shopper Actions
 
+    function getOrderCountByAddress(address _address)
+        public
+        view
+        returns (uint size) 
+    {
+        return orders[_address].length;
+    }
+
+    function getOrder(address _address, uint orderId)
+        public
+        view
+        returns (uint, uint, uint, uint, uint, uint) 
+    {
+        Order memory order = orders[_address][orderId];
+        return (
+            order.orderId,
+            order.productId,
+            order.storefrontId, 
+            order.datetime, 
+            order.quantity, 
+            order.price
+        );
+    }
+
     function buyProduct(uint _storefrontId, uint _productId, uint _quantity) 
         public
         productAvailable(_storefrontId, _productId, _quantity) 

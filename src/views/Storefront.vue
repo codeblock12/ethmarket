@@ -53,11 +53,16 @@ import { mapState, mapActions } from 'vuex'
 import { toWei, fromWei } from '../utilities'
 import { STOREFRONT } from '../constants'
 
+import ProductCard from '@/components/ProductCard';
+
 import Marketplace from '../services/marketplace.js';
 let market = new Marketplace();
 
 export default {
 	name: 'Storefront',
+	component: {
+		ProductCard
+	},
 	data() {
 		return {
 			storefrontData: {},
@@ -152,15 +157,3 @@ async function refreshProducts(_vm) {
 }
 
 </script>
-
-<style scoped>
-	.card {
-		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    border-radius: 5px; /* 5px rounded corners */
-		padding: 5px;
-    transition: 0.3s;
-	}
-	.card:hover {
-			box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-	}	
-</style>

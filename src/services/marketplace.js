@@ -204,4 +204,24 @@ export default class Marketplace {
     })       
   }
 
+  getOrderCountByAddress(_address) {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.getOrderCountByAddress.call(_address)
+      .then( size => resolve(size))
+      .catch ( err => reject(err))
+    })     
+  }
+
+  getOrder(_address, _orderId) {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.getOrder(_address, _orderId)
+      .then( product => resolve(product))
+      .catch ( err => reject(err))
+    })     
+  }
+
+
+
 }
