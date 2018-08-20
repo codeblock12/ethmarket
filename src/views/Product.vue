@@ -51,7 +51,7 @@ export default {
 }
 
 async function refreshProduct(_vm) {
-	let product = await market.getProductById(_vm.storefrontId, _vm.productId);
+	let product = await market.getProduct(_vm.storefrontId, _vm.productId);
 	_vm.productData = product;
 }
 

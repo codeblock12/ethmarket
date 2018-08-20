@@ -170,7 +170,7 @@ export default class Marketplace {
     })     
   }
 
-  getProductById(_storefrontId, _productId) {
+  getProduct(_storefrontId, _productId) {
     let self = this;
     return new Promise (function (resolve, reject) {
       self.instance.getProductsByProductId(_storefrontId, _productId)

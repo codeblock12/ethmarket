@@ -29,7 +29,7 @@
 				<ul>
 					<li v-for="(product, index) in products" 
 						:key="index" 
-						@click="goToProduct(product[0])">
+						@click="goToProduct(product[1])">
 							{{product}}
 					</li>
 				</ul>	
@@ -130,7 +130,7 @@ async function refreshProducts(_vm) {
 	let storeSize = await market.getProductCountByStorefrontId(_vm.storefrontId);
 	_vm.productsData = [];
 	for (let i=0; i<storeSize; i++) {
-		let product = await market.getProductByStorefrontId(_vm.storefrontId, i)
+		let product = await market.getProduct(_vm.storefrontId, i)
 		_vm.productsData.push(product);
 	}
 }
