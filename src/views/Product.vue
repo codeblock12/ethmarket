@@ -16,6 +16,7 @@
 		<div>
         <label>Quantity</label> <input v-model="quantityToBuyInput"/>
 				<button @click="buyProduct"> Buy </button>
+				<div> Total:{{totalInEther}} Ether</div>
     </div>
 
   </div>
@@ -50,7 +51,11 @@ export default {
 		},
 		priceInEther() {
 			return fromWei(this.product[PRODUCT.PRICE]);
-		}
+		},
+		totalInEther() {
+			let total = this.product[PRODUCT.PRICE] * this.quantityToBuyInput;
+			return fromWei(total);
+		}		
 	},
 	methods: {
 		goBack () {

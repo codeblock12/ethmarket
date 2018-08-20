@@ -1,15 +1,10 @@
 <template>
   <div>
 		<button @click="goBack">Go back </button>
-		StoreId: {{storefrontId}}
+		
 		<div>Storefront</div>
 
-		<div class="card">
-			<div>Storename: {{storefront[storefrontLabel.NAME]}}</div>
-			<div>Owner: {{storefront[storefrontLabel.OWNER]}}</div>
-			<div>Balance: {{balanceInEther}}</div>
-			<div>Is Active: {{storefront[storefrontLabel.IS_ACTIVE]}}</div>
-		</div>
+		<storefront-card :storefront="storefront" />
 		
 		<div>
         <label>Rename Storefront:</label> <input v-model="storefrontNameInput"/>
@@ -33,39 +28,35 @@
         <label>Quantity</label> <input v-model="productInput.quantity"/>
         <button @click="createProduct" >create Product</button>
 				<button @click="refreshProducts" >Refresh Products</button>
-				<p>{{productInput}}</p>
     </div>
-		<div class="card">
-				<ul>
-					<li v-for="(product, index) in products" 
-						:key="index" 
-						@click="goToProduct(product[1])">
-							{{product}}
-					</li>
-				</ul>	
-		</div>	
+
+	<product-card
+		v-for="(product, index) in products"
+		:key="index"
+		:product="product">
+	</product-card>
 
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { toWei, fromWei } from '../utilities'
-import { STOREFRONT } from '../constants'
-
+import { toWei } from '../utilities'
 import ProductCard from '@/components/ProductCard';
-
+import StorefrontCard from '@/components/StorefrontCard.vue'
 import Marketplace from '../services/marketplace.js';
+
 let market = new Marketplace();
 
 export default {
 	name: 'Storefront',
-	component: {
-		ProductCard
+	components: {
+		ProductCard,
+		StorefrontCard		
 	},
 	data() {
 		return {
-			storefrontData: {},
+			storefrontData: [],
 			productsData: [],
 			storefrontId: this.$route.params.id,
 			storefrontNameInput: null,
@@ -73,8 +64,7 @@ export default {
 				name: '',
 				price: '',
 				quantity: ''
-			},
-			storefrontLabel: STOREFRONT
+			}
 		}
 	},
 	computed: {
@@ -86,9 +76,6 @@ export default {
 		},
 		products() {
 			return this.productsData;
-		},
-		balanceInEther() {
-			return fromWei(this.storefrontData[STOREFRONT.BALANCE]);
 		}
 	},
 	methods: {
@@ -123,10 +110,6 @@ export default {
 		async withdrawFunds(){
 			await market.withdrawStorefrontFunds(this.storefrontId, this.currentAccount)
 			refreshStorefront(this);
-		},
-    goToProduct(_productId) {
-      this.$router.push(
-				{ path: `/storefront/${this.storefrontId}/product/${_productId}`}) //Todo: convert url to constant
 		},
 		refreshProducts() {
 			refreshProducts(this);	

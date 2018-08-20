@@ -5,7 +5,8 @@
 		<order-card 
 			v-for="(order, index) in orders"
 			:key="index"		
-			:order="order"/>
+			:order="order">
+		</order-card>
 	</div>
 </template>
 

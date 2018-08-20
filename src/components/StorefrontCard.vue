@@ -11,15 +11,11 @@
 <script>
 import { toWei, fromWei } from '../utilities'
 import { STOREFRONT } from '../constants'
-import StorefrontCard from '@/components/StorefrontCard';
 
 export default {
 	name: 'StorefrontCard',
 	props:{
 		storefront: Array
-	},
-	component: {
-		StorefrontCard
 	},
 	data() {
 		return {

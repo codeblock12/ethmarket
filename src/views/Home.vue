@@ -4,7 +4,8 @@
       <storefront-card 
         v-for="(store, index) in storefronts" 
         :key="index" 
-        :storefront="store"/>
+        :storefront="store">
+      </storefront-card>
   </div>
 </template>
 
