@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import StorefrontCard from '@/components/StorefrontCard.vue'
 import Marketplace from '@/services/marketplace';
 

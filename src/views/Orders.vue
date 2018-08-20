@@ -2,42 +2,35 @@
   <div>
 		<button @click="goBack">Go back </button>
 		<h1>Orders</h1>
-		{{order}}
-		<div class="card">
-			<div> Timestamp:{{order[orderLabel.DATETIME]}} </div>
-			<div> Price:{{priceInEther}} </div>
-			<div> Quantity:{{order[orderLabel.QUANTITY]}} </div>
-			<div> Status:{{order[orderLabel.STATUS]}} </div>
-		</div>
-  </div>
+		<order-card 
+			v-for="(order, index) in orders"
+			:key="index"		
+			:order="order"/>
+	</div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { ORDER } from '../constants'
-import { toWei, fromWei } from '../utilities'
-
+import OrderCard from '@/components/OrderCard'
 import Marketplace from '../services/marketplace.js'
 let market = new Marketplace();
 
 export default {
 	name: 'Orders',
+	components: {
+		OrderCard
+	},
 	data() {
 		return {
-			orderData: {},
-			productData: {},
-			orderLabel: ORDER
+			orderData: []
 		}
 	},
 	computed: {
 		...mapState({
-			currentAccount: state => state.currentAccount
-		}),
-		product() {
-			return this.productData || {};
-		},
-		order() {
-			return this.orderData || {};
+      currentAccount: state => state.currentAccount
+		}),		
+		orders() {
+			return this.orderData;
 		},
 		priceInEther() {
 			return fromWei(this.orderData[this.orderLabel.PRICE]);
@@ -52,26 +45,18 @@ export default {
 	},
 	async mounted(){
 		await market.init();
-		refreshOrders(this);
-		getProduct(this)
+		getOrders(this)
 	}
 }
 
-async function refreshOrders(_vm) {
-	let ordersCount = await market.getOrderCountByAddress(_vm.order[_vm.orderLabel.STOREFRONT_ID]);
-	_vm.productsData = [];
+async function getOrders(_vm) {
+	await _vm.$store.dispatch('getCurrentAccount');
+	let ordersCount = await market.getOrderCountByAddress(_vm.currentAccount);
+	_vm.orderData = [];
 	for (let i=0; i<ordersCount; i++) {
-		let order = await market.getOrder(_vm.storefrontId, i)
+		let order = await market.getOrder(_vm.currentAccount, i)
 		_vm.orderData.push(order);
 	}
-}
-
-async function getProduct(_vm) {
-	let product = await market.getProduct(
-		_vm.order[_vm.orderLabel.STOREFRONT_ID], 
-		_vm.order[_vm.orderLabel.PRODUCT_ID]
-	);
-	_vm.productData = product;
 }
 
 </script>

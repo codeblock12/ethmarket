@@ -10,7 +10,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentAccount: web3.eth.accounts[0] || 'Account Loading...',
+    currentAccount: 'Account Loading...',
     accountRole: 'Role Loading...',
     storefronts: []
   },

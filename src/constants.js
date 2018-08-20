@@ -36,9 +36,10 @@ export const ORDER = {
 	'ORDER_ID': '0',
 	'PRODUCT_ID': '1',
 	'STOREFRONT_ID': '2',
-	'DATETIME': '3',
-  'QUANTITY': '4',
-	'PRICE': '5',	
+	'PRODUCT_NAME': '3',
+	'DATETIME': '4',
+  'QUANTITY': '5',
+	'PRICE': '6'
 }
 
 export const WEI = '1000000000000000000';

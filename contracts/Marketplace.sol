@@ -40,6 +40,7 @@ contract Marketplace {
         uint orderId;
         uint productId;
         uint storefrontId;
+        string productName;
         uint datetime;
         uint quantity;
         uint price;
@@ -225,13 +226,14 @@ contract Marketplace {
     function getOrder(address _address, uint orderId)
         public
         view
-        returns (uint, uint, uint, uint, uint, uint) 
+        returns (uint, uint, uint, string, uint, uint, uint) 
     {
         Order memory order = orders[_address][orderId];
         return (
             order.orderId,
             order.productId,
-            order.storefrontId, 
+            order.storefrontId,
+            order.productName, 
             order.datetime, 
             order.quantity, 
             order.price
@@ -256,6 +258,7 @@ contract Marketplace {
             orderId: orders[msg.sender].length,
             productId: p.productId,
             storefrontId: p.storefrontId,
+            productName: p.name,
             datetime: now,
             quantity: _quantity,
             price: p.price
