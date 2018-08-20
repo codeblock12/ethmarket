@@ -191,4 +191,17 @@ export default class Marketplace {
     })   
   }
 
+  buyProduct(_storefrontId, _productId, _quantity, _total, _caller) {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.buyProduct(
+        _storefrontId, 
+        _productId,
+        _quantity,
+        {from: _caller, value: _total, gas: highGasLimit})
+      .then( success => resolve(success))
+      .catch ( err => reject(err))
+    })       
+  }
+
 }

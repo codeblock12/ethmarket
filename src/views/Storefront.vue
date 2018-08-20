@@ -40,6 +40,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { toWei } from '../utilities'
 
 import Marketplace from '../services/marketplace.js';
 let market = new Marketplace();
@@ -93,7 +94,7 @@ export default {
 			await market.createProduct(
 				this.storefrontId,
 				this.productInput.name,
-				this.productInput.price,
+				toWei(this.productInput.price),
 				this.productInput.quantity,
 				this.currentAccount
 			);

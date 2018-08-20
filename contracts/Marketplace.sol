@@ -81,7 +81,7 @@ contract Marketplace {
 
     modifier productAvailable (uint _storefrontId, uint _productId, uint _quantity) { require(products[_storefrontId][_productId].quantity > _quantity); _; }
 
-    modifier paidEnough (uint _storefrontId, uint _productId, uint _quantity) { require(msg.value > products[_storefrontId][_productId].price * _quantity); _; }
+    modifier paidEnough (uint _storefrontId, uint _productId, uint _quantity) { require(msg.value >= products[_storefrontId][_productId].price * _quantity); _; }
 
     constructor() public {
         owner = msg.sender;
