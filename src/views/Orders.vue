@@ -1,6 +1,5 @@
 <template>
   <div>
-		<button @click="goBack">Go back </button>
 		<h1>Orders</h1>
 		<order-card 
 			v-for="(order, index) in orders"
@@ -36,13 +35,6 @@ export default {
 		priceInEther() {
 			return fromWei(this.orderData[this.orderLabel.PRICE]);
 		}
-	},
-	methods: {
-		goBack () {
-			window.history.length > 1
-					? this.$router.go(-1)
-					: this.$router.push('/');
-		}    
 	},
 	async mounted(){
 		await market.init();

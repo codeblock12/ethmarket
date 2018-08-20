@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Blockchain from './services/blockchain';
 import Marketplace from './services/marketplace';
+import { NOTIFICATION_TIMEOUT } from './constants';
 
 let market = new Marketplace();
 let blockchain = new Blockchain();
@@ -12,7 +13,8 @@ export default new Vuex.Store({
   state: {
     currentAccount: 'Account Loading...',
     accountRole: 'Role Loading...',
-    storefronts: []
+    storefronts: [],
+    notification: null
   },
   mutations: {
     setCurrentAccount(state, account){
@@ -25,8 +27,11 @@ export default new Vuex.Store({
       state.accountRole = role;
     },
     setStorefronts(state, storefronts) {
-      state.storefronts = storefronts
-    } 
+      state.storefronts = storefronts;
+    },
+    setNotification(state, message) {
+      state.notification = message;
+    }
   },
   actions: {
     async getCurrentAccount({ commit }){
@@ -64,6 +69,12 @@ export default new Vuex.Store({
     createStorefront({ state }, name){
       market.createStorefrontByName(name, state.currentAccount)
       .then(success => console.log('successfully created new storefront'))
-    },                 
+    },
+    sendNotification({ commit }, message) {
+      commit('setNotification', message);
+      setTimeout( () => {
+        commit('setNotification', null);
+      }, NOTIFICATION_TIMEOUT)
+    }                 
   }
 })

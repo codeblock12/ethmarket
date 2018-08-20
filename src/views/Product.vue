@@ -1,6 +1,6 @@
 <template>
   <div>
-		<button @click="goBack">Go back </button>
+		<back-navigation />
 		StoreId: {{storefrontId}}
 		<h1>Product</h1>
 		{{product}}
@@ -26,6 +26,7 @@
 import { mapState, mapActions } from 'vuex'
 import { PRODUCT_STATUS, PRODUCT } from '../constants'
 import { toWei, fromWei } from '../utilities'
+import BackNavigation from '@/components/BackNavigation'
 
 import Marketplace from '../services/marketplace.js'
 
@@ -33,6 +34,9 @@ let market = new Marketplace();
 
 export default {
 	name: 'Storefront',
+	components: {
+		BackNavigation		
+	},
 	data() {
 		return {
 			productData: null,
@@ -58,11 +62,6 @@ export default {
 		}		
 	},
 	methods: {
-		goBack () {
-			window.history.length > 1
-					? this.$router.go(-1)
-					: this.$router.push('/');
-		},
 		async deactivateProduct(){
 			await market.deactivateProduct(
 				this.storefrontId,
