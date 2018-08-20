@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import { getRoleById } from '../utilities'
 import Marketplace from '../services/marketplace.js';
 let market = new Marketplace();
@@ -21,14 +21,6 @@ export default {
     currentAccountRoleLabel(){
       return getRoleById(this.currentRole);
     }
-  },  
-  methods: {
-    ...mapActions([
-      'setAdminRole',
-      'removeAdminRole',
-      'setStoreOwnerRole',
-      'removeStoreOwnerRole'
-    ])
   },  
   mounted(){
     var self = this

@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import { toWei, fromWei } from '../utilities'
 import { STOREFRONT } from '../constants'
 

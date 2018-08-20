@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Blockchain from './services/blockchain';
 import Marketplace from './services/marketplace';
-import { waitForAsync } from './utilities';
 
 let market = new Marketplace();
 let blockchain = new Blockchain();
@@ -30,7 +29,7 @@ export default new Vuex.Store({
     } 
   },
   actions: {
-    async getCurrentAccount({ commit, dispatch, state }){
+    async getCurrentAccount({ commit }){
       await market.init();
       let account = await blockchain.getCurrentAccount();
       commit('setCurrentAccount', account);
@@ -53,9 +52,14 @@ export default new Vuex.Store({
       market.removeStoreOwnerByAddress(address, state.currentAccount)
       .then(success => console.log('successfully remove admin role'))
     },
-    getStorefronts({ commit } ){
-      market.getStorefronts()
-      .then(storefronts => commit('setStorefronts', storefronts))
+    async getStorefronts({ commit }){
+      let storefronts = [];
+      let storeSize = await market.getStorefrontCount();
+      for (let i=0; i<storeSize; i++) {
+        let storefront = await market.getStorefrontsById(i)
+        storefronts.push(storefront);
+      }
+      commit('setStorefronts', storefronts);
     },    
     createStorefront({ state }, name){
       market.createStorefrontByName(name, state.currentAccount)

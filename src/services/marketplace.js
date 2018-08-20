@@ -109,7 +109,7 @@ export default class Marketplace {
   getStorefrontCount() {
     let self = this;
     return new Promise (function (resolve, reject) {
-      self.instance.storefronts.call()
+      self.instance.storefrontCount.call()
       .then( storefrontCount => resolve(storefrontCount))
       .catch ( err => reject(err))
     })     
@@ -221,7 +221,5 @@ export default class Marketplace {
       .catch ( err => reject(err))
     })     
   }
-
-
 
 }

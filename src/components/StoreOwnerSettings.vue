@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <h1>Store Owner</h1>
     <div>
         <label>Create Storeowner:</label> <input v-model="storefrontNameInput"/>

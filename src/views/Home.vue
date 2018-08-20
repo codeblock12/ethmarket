@@ -1,18 +1,33 @@
 <template>
   <div class="home">
-    <StorefrontCard msg="Welcome to the Eth Market App"/>
+      <h2>Storefronts</h2>
+      <storefront-card 
+        v-for="(store, index) in storefronts" 
+        :key="index" 
+        :storefront="store"/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import { mapState, mapActions } from 'vuex'
 import StorefrontCard from '@/components/StorefrontCard.vue'
+import Marketplace from '@/services/marketplace';
 
+let market = new Marketplace();
 
 export default {
   name: 'home',
   components: {
     StorefrontCard
+  },
+  computed: {
+		...mapState({
+      storefronts: state => state.storefronts
+		})
+  },
+  async mounted() {
+    await market.init();
+    this.$store.dispatch('getStorefronts');
   }
 }
 </script>
