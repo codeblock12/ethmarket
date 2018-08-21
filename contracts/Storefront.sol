@@ -100,6 +100,8 @@ contract Storefront is Core {
 
     function withdrawStoreFunds(uint _storefrontId) 
         public 
+        whenNotPaused
+        nonReentrant                
         ownsStorefront(_storefrontId) 
         returns (bool success) 
     {

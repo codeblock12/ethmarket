@@ -2,7 +2,7 @@ pragma solidity ^0.4.24;
 
 import "./Core.sol";
 
-contract Shopper is Core, ReentrancyGuard {
+contract Shopper is Core {
     function getOrderCountByAddress(address _address)
         public
         view
@@ -30,7 +30,8 @@ contract Shopper is Core, ReentrancyGuard {
 
     function buyProduct(uint _storefrontId, uint _productId, uint _quantity) 
         public
-        nonReentrant        
+        nonReentrant
+        whenNotPaused                
         productAvailable(_storefrontId, _productId, _quantity) 
         paidEnough(_storefrontId, _productId, _quantity) 
         payable 

@@ -1,12 +1,12 @@
 pragma solidity ^0.4.24;
 
 import "./libraries/Ownable.sol";
-import "./MarketStorage.sol";
+import "./libraries/Pausable.sol";
 import "./libraries/ReentrancyGuard.sol";
 import "./libraries/SafeMath.sol";
+import "./MarketStorage.sol";
 
-
-contract Core is Ownable, MarketStorage {
+contract Core is Ownable, MarketStorage, Pausable, ReentrancyGuard {
     
     // role storage
     uint8 shopperRole = 0;
