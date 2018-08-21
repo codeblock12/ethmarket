@@ -11,3 +11,13 @@ An administrator opens the web app. The web app reads the address and identifies
 An approved store owner logs into the app. The web app recognizes their address and identifies them as a store owner. They are shown the store owner functions. They can create a new storefront that will be displayed on the marketplace. They can also see the storefronts that they have already created. They can click on a storefront to manage it. They can add/remove products to the storefront or change any of the products’ prices. They can also withdraw any funds that the store has collected from sales.
  
 A shopper logs into the app. The web app does not recognize their address so they are shown the generic shopper application. From the main page they can browse all of the storefronts that have been created in the marketplace. Clicking on a storefront will take them to a product page. They can see a list of products offered by the store, including their price and quantity. Shoppers can purchase a product, which will debit their account and send it to the store. The quantity of the item in the store’s inventory will be reduced by the appropriate amount.
+
+Considerations:
+
+* Circuit breaker/emergency stop install w/ Pausable contract
+* ReentracnyGuard for blocks reentrancy attacks
+* Seperate storage for upgradabity considerations (block gas limit)
+* Able to transfer owner role
+* Abstract less frequently used calls to a library
+
+
