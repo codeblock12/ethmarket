@@ -1,9 +1,8 @@
 pragma solidity ^0.4.24;
 
-import "./libraries/Ownable.sol";
 import "./libraries/SafeMath.sol";
 
-contract MarketStorage is Ownable {
+contract MarketStorage {
     //all storefronts
     Storefront[] public storefronts;
     //link to storefrontId by owner address
