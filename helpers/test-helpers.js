@@ -1,5 +1,4 @@
 const PREFIX = "VM Exception while processing transaction: ";
-const NoError = "Expected an error but did not get one";
 
 export const errTypes = {
   revert            : "revert",
@@ -17,6 +16,7 @@ export async function tryCatch(promise, errType) {
       throw null;
   }
   catch (error) {
+    console.log(error);
       assert(error, "Expected an error but did not get one");
       assert(
         error.message.startsWith(PREFIX + errType), 
