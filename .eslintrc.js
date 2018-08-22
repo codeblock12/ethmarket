@@ -1,7 +1,13 @@
 module.exports = {
   root: true,
-  env: {
-    node: true
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "web3": true,
+    "assert": true,
+    "contract": true
   },
   'extends': [
     'plugin:vue/essential',

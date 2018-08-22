@@ -2,6 +2,7 @@
 node_modules
 /dist
 /build
+ganache-accounts.json
 
 # local env files
 .env.local
