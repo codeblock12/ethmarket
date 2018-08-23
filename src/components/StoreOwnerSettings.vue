@@ -3,10 +3,10 @@
     <h1>Store Owner</h1>
     <div>
         <label>Create Storeowner:</label> <input v-model="storefrontNameInput"/>
-        <button @click="createStorefront(storefrontNameInput)" >Add Storefront</button>
+        <a href="#" class="btn" @click="createStorefront(storefrontNameInput)" >Add Storefront</a>
     </div>
     <div>
-      <h2>Storefronts</h2><a href="#" @click="getOwnedStorefronts">Refresh</a>
+      <h2>Storefronts</h2><a href="#" class="btn" @click="getOwnedStorefronts">Refresh</a>
       <storefront-card 
         v-for="(store, index) in storefronts" 
         :key="index" 

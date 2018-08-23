@@ -8,16 +8,16 @@
 		
 		<div>
         <label>Rename Storefront:</label> <input v-model="storefrontNameInput"/>
-        <button @click="renameStorefront" >Rename Storefront</button>
+        <a href="#" class="btn" @click="renameStorefront" >Rename Storefront</a>
     </div>
 
     <div>
-        <button @click="deactiveStorefront" >Deactivate Storefront</button>
-				<button @click="refreshStorefront" >Refresh Storefront</button>
+        <a href="#" class="btn" @click="deactiveStorefront" >Deactivate Storefront</a>
+				<a href="#" class="btn" @click="refreshStorefront" >Refresh Storefront</a>
     </div>
 
 		<div>
-				<button @click="withdrawFunds" >Withdraw Balance</button>
+				<a href="#" class="btn" @click="withdrawFunds" >Withdraw Balance</a>
     </div>
 
 		<div>Products</div>
@@ -26,8 +26,8 @@
         <label>Name</label> <input v-model="productInput.name"/>
         <label>Price</label> <input v-model="productInput.price"/>
         <label>Quantity</label> <input v-model="productInput.quantity"/>
-        <button @click="createProduct" >create Product</button>
-				<button @click="refreshProducts" >Refresh Products</button>
+        <a href="#" class="btn" @click="createProduct" >create Product</a>
+				<a href="#" class="btn" @click="refreshProducts" >Refresh Products</a>
     </div>
 	<product-card
 		v-for="(product, index) in products"

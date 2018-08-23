@@ -11,11 +11,11 @@
 			<div> Status:{{product[productLabel.STATUS]}} </div>
 		</div>
 
-		<button @click="deactivateProduct"> Deactivate </button>
+		<a href="#" class="btn" @click="deactivateProduct"> Deactivate </a>
 
 		<div>
         <label>Quantity</label> <input v-model="quantityToBuyInput"/>
-				<button @click="buyProduct"> Buy </button>
+				<a href="#" class="btn" @click="buyProduct"> Buy </a>
 				<div> Total:{{totalInEther}} Ether</div>
     </div>
 

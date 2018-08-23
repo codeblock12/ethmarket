@@ -3,11 +3,11 @@
       <h1>Owner</h1>
       <div>
           <label>Create Admin:</label> <input v-model="addAdminInput"/>
-          <button @click="setAdminRole(addAdminInput)" >Add Admin</button>
+          <a href="#" class="btn" @click="setAdminRole(addAdminInput)" >Add Admin</a>
       </div>
       <div>
           <label>Remove Admin:</label> <input v-model="removeAdminInput"/>
-          <button @click="removeAdminRole(removeAdminInput)" >Remove Admin</button>
+          <a href="#" class="btn" @click="removeAdminRole(removeAdminInput)" >Remove Admin</a>
       </div>
   </div>
 </template>

@@ -3,7 +3,7 @@
 
     <div v-if="isMarketOwner || isAdmin">
         <label>Get Role:</label> <input v-model="roleAddressInput"/>
-        <button @click="getRoleByAddress"> Get Role</button>
+        <a href="#" class="btn" @click="getRoleByAddress"> Get Role</a>
         <div>Role: {{queriedRoleLabel}}</div>
     </div>
 
