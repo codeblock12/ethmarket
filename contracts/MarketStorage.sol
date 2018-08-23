@@ -3,6 +3,7 @@ pragma solidity ^0.4.24;
 import "./libraries/SafeMath.sol";
 
 contract MarketStorage {
+    using SafeMath for uint;
     //all storefronts
     Storefront[] public storefronts;
     //link to storefrontId by owner address
@@ -65,7 +66,7 @@ contract MarketStorage {
         _; 
     }
     modifier paidEnough (uint _storefrontId, uint _productId, uint _quantity) { 
-        require(msg.value >= SafeMath.mul(products[_storefrontId][_productId].price, _quantity)); 
+        require(msg.value >= products[_storefrontId][_productId].price.mul(_quantity)); 
         _; 
     }
 }
