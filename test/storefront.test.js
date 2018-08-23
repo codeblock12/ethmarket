@@ -1,5 +1,6 @@
 
 import { ROLES, STOREFRONT, PRODUCT } from '../src/constants'
+import { tryCatch } from '../helpers/test-helpers'
 
 const Storefront = artifacts.require('Storefront');
 
@@ -32,12 +33,9 @@ contract('storefront', accounts => {
       assert.equal(newStorefront[STOREFRONT.IS_ACTIVE], true);
     })      
 
-    xit('should only allow storefront owners to create', async () => {
-      let newStorefront = await storefront.storefronts.call(0);
-      assert.equal(newStorefront[STOREFRONT.STOREFRONT_ID], 0);
-      assert.equal(newStorefront[STOREFRONT.OWNER], StoreOwner);
-      assert.equal(newStorefront[STOREFRONT.BALANCE], 0);
-      assert.equal(newStorefront[STOREFRONT.IS_ACTIVE], true);
+    it('should only allow storefront owners to create', async () => {
+      await tryCatch(storefront.createStorefront('mockStorefront', {from: Admin}));
+      await tryCatch(storefront.createStorefront('mockStorefront', {from: Shopper}));
     })        
 
     it('should return list of ids of owned storefronts', async () => {

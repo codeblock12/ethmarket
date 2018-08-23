@@ -1,26 +1,11 @@
 const PREFIX = "VM Exception while processing transaction: ";
 
-export const errTypes = {
-  revert            : "revert",
-  outOfGas          : "out of gas",
-  invalidJump       : "invalid JUMP",
-  invalidOpcode     : "invalid opcode",
-  stackOverflow     : "stack overflow",
-  stackUnderflow    : "stack underflow",
-  staticStateChange : "static state change"
-}
-
-export async function tryCatch(promise, errType) {
-  try {
-      await promise;
-      throw null;
-  }
-  catch (error) {
-    console.log(error);
-      assert(error, "Expected an error but did not get one");
-      assert(
-        error.message.startsWith(PREFIX + errType), 
-        `Expected an error starting with ${PREFIX+errType} but got ${error.message} instead`
-      );
-  }
-}
+export async function tryCatch(promise, message) {
+    try {
+        await promise;
+        throw null;
+    }
+    catch (error) {
+        assert(error, "Expected an error but did not get one");
+    }
+};

@@ -1,6 +1,6 @@
 
 import { ROLES } from '../src/constants'
-import {errTypes, tryCatch} from '../helpers/test-helpers'
+import { tryCatch } from '../helpers/test-helpers'
 
 const Core = artifacts.require('core');
 
@@ -53,19 +53,19 @@ contract('Core', accounts => {
     })  
     
     it('should allow only owner to modify admin role', async () => {  
-      await tryCatch(core.addAdmin(Shopper, {from: Shopper}), errTypes.revert);
-      await tryCatch(core.addAdmin(Shopper, {from: StoreOwner}), errTypes.revert);
-      await tryCatch(core.addAdmin(Shopper, {from: Admin}), errTypes.revert);
-      await tryCatch(core.removeAdmin(Shopper, {from: Shopper}), errTypes.revert);
-      await tryCatch(core.removeAdmin(Shopper, {from: StoreOwner}), errTypes.revert);
-      await tryCatch(core.removeAdmin(Shopper, {from: Admin}), errTypes.revert);  
+      await tryCatch(core.addAdmin(Shopper, {from: Shopper}));
+      await tryCatch(core.addAdmin(Shopper, {from: StoreOwner}));
+      await tryCatch(core.addAdmin(Shopper, {from: Admin}));
+      await tryCatch(core.removeAdmin(Shopper, {from: Shopper}));
+      await tryCatch(core.removeAdmin(Shopper, {from: StoreOwner}));
+      await tryCatch(core.removeAdmin(Shopper, {from: Admin}));  
     })  
 
-    it('should allow only store owners to modify store owner role', async () => {  
-      await tryCatch(core.addStoreOwner(Shopper, {from: Shopper}), errTypes.revert);
-      await tryCatch(core.addStoreOwner(Shopper, {from: StoreOwner}), errTypes.revert);
-      await tryCatch(core.removeStoreOwner(Shopper, {from: Shopper}), errTypes.revert);
-      await tryCatch(core.removeStoreOwner(Shopper, {from: StoreOwner}), errTypes.revert);      
+    it('should allow only admins to modify store owner role', async () => {  
+      await tryCatch(core.addStoreOwner(Shopper, {from: Shopper}));
+      await tryCatch(core.addStoreOwner(Shopper, {from: StoreOwner}));
+      await tryCatch(core.removeStoreOwner(Shopper, {from: Shopper}));
+      await tryCatch(core.removeStoreOwner(Shopper, {from: StoreOwner}));
     })      
   
   })
