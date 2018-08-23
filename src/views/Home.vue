@@ -1,6 +1,9 @@
 <template>
   <div class="home">
       <h2>Storefronts</h2>
+      <div class="card" v-if="!storefronts.length">
+        No Storefonts Listed
+      </div>      
       <storefront-card 
         v-for="(store, index) in storefronts" 
         :key="index" 

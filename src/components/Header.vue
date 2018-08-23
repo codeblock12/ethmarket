@@ -7,9 +7,6 @@
 <script>
 import { mapState } from 'vuex'
 import { getRoleById } from '../utilities'
-import Marketplace from '../services/marketplace.js';
-let market = new Marketplace();
-
 
 export default {
   name: 'Header',

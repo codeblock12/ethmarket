@@ -5,9 +5,8 @@
         <label>Create Storeowner:</label> <input v-model="storefrontNameInput"/>
         <button @click="createStorefront(storefrontNameInput)" >Add Storefront</button>
     </div>
-    <button @click="getOwnedStorefronts" >Get Storefront</button>
     <div>
-      <h2>Storefronts</h2>
+      <h2>Storefronts</h2><a href="#" @click="getOwnedStorefronts">Refresh</a>
       <storefront-card 
         v-for="(store, index) in storefronts" 
         :key="index" 
@@ -48,15 +47,21 @@ export default {
       'setStoreOwnerRole',
       'createStorefront'
     ]),
-    async getOwnedStorefronts() {
-      let self = this;
-      let storefrontList = await market.getStorefrontsByAddress(self.currentAccount);
-      self.storefrontsData = [];
-      for (const storefrontId of storefrontList) {
-        let storefront = await market.getStorefrontsById(Number(storefrontId))
-        self.storefrontsData.push(storefront);
-      }
+    getOwnedStorefronts() {
+      getOwnedStorefronts(this);
     }    
+  },
+  mounted(){
+    getOwnedStorefronts(this);
   }
+}
+
+async function getOwnedStorefronts(vm){
+    let storefrontList = await market.getStorefrontsByAddress(vm.currentAccount);
+    vm.storefrontsData = [];
+    for (const storefrontId of storefrontList) {
+      let storefront = await market.getStorefrontsById(Number(storefrontId))
+      vm.storefrontsData.push(storefront);
+    }    
 }
 </script>

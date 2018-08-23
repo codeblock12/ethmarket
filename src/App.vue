@@ -29,6 +29,7 @@ export default {
 body {
   background-color: #2c3e50
 }
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -47,6 +48,15 @@ body {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+label {
+  margin-right: 10px;
+}
+
+.btn {
+  margin-left: 15px;
+  color: white
 }
 
 .card {

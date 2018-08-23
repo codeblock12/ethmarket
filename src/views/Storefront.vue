@@ -29,7 +29,6 @@
         <button @click="createProduct" >create Product</button>
 				<button @click="refreshProducts" >Refresh Products</button>
     </div>
-
 	<product-card
 		v-for="(product, index) in products"
 		:key="index"

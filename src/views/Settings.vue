@@ -1,82 +1,77 @@
 <template>
   <div>
-    <div>
-        <label>Role:</label> <input v-model="roleAddressInput"/>
+
+    <div v-if="isMarketOwner || isAdmin">
+        <label>Get Role:</label> <input v-model="roleAddressInput"/>
         <button @click="getRoleByAddress"> Get Role</button>
-        Role: {{queriedRoleLabel}}
+        <div>Role: {{queriedRoleLabel}}</div>
     </div>
-    <h1>Owner</h1>
-    <div>
-        <label>Create Admin:</label> <input v-model="addAdminInput"/>
-        <button @click="setAdminRole(addAdminInput)" >Add Admin</button>
-    </div>
-    <div>
-        <label>Remove Admin:</label> <input v-model="removeAdminnInput"/>
-        <button @click="removeAdminRole(removeAdminnInput)" >Remove Admin</button>
-    </div>
-    <h1>Admin</h1>
-    <div>
-        <label>Create Storeowner:</label> <input v-model="addStoreOwnerInput"/>
-        <button @click="setStoreOwnerRole(addStoreOwnerInput)" >Add StoreOwner</button>
-    </div>
-    <div>
-        <label>Remove Storeowner:</label> <input v-model="removeStoreOwnerInput"/>
-        <button @click="removeStoreOwnerRole(removeStoreOwnerInput)" >Remove StoreOwner</button>
-    </div>
-    <StoreOwnerSettings />    
+
+    <MarketOwnerSettings v-if="isMarketOwner" />
+    <AdminSettings v-if="isAdmin" />  
+    <StoreOwnerSettings v-if="isStoreOwner" />
+
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import { getRoleById } from '../utilities'
+import { mapState } from 'vuex'
+import { ROLES } from '@/constants';
+import { getRoleById } from '@/utilities'
 
+import MarketOwnerSettings from '@/components/MarketOwnerSettings.vue'
 import StoreOwnerSettings from '@/components/StoreOwnerSettings.vue'
+import AdminSettings from '@/components/AdminSettings.vue'
 
-import Marketplace from '../services/marketplace.js';
+import Marketplace from '@/services/marketplace.js';
 let market = new Marketplace();
 
 
 export default {
   name: 'Settings',
   components: {
-    StoreOwnerSettings
+    StoreOwnerSettings,
+    AdminSettings,
+    MarketOwnerSettings        
   },
   data() {
     return {
       roleAddressInput: null,
-      addAdminInput: null,
-      removeAdminnInput: null,
-      addStoreOwnerInput: null,
-      removeStoreOwnerInput: null,
       queriedRole: null
     }
   },
   computed: {
     ...mapState({
       currentAccount: state => state.currentAccount,
-      currentRole: state => state.accountRole
+      currentRole: state => state.accountRole,
+      ownerAccount: state => state.ownerAccount
     }),
     currentAccountRoleLabel(){
       return getRoleById(this.currentRole);
     },
     queriedRoleLabel() {
       return getRoleById(this.queriedRole);
+    },
+    isMarketOwner(){
+      return this.currentAccount.toUpperCase() == this.ownerAccount.toUpperCase();
+    },
+    isAdmin(){
+      return this.currentRole == ROLES.ADMIN;
+    },
+    isStoreOwner(){
+      return this.currentRole == ROLES.STORE_OWNER;
     }
   },
   methods: {
-    ...mapActions([
-      'setAdminRole',
-      'removeAdminRole',
-      'setStoreOwnerRole',
-      'removeStoreOwnerRole'
-    ]),
     getRoleByAddress() {
       let self = this;
       market.getRoleByAddress(self.roleAddressInput)
       .then(role => self.queriedRole = role.toNumber())
     }
-  }
+  },
+  mounted () {
+    this.$store.dispatch('setOwnerAccount');
+  }  
 }
 </script>
 

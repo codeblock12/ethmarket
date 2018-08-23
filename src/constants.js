@@ -45,4 +45,4 @@ export const ORDER = {
 export const WEI = '1000000000000000000';
 export const GWEI = '1000000000';
 
-export const NOTIFICATION_TIMEOUT = '5000'
+export const NOTIFICATION_TIMEOUT = '5000';

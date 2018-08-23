@@ -1,4 +1,4 @@
-import { ROLE_LABELS, WEI } from './constants';
+import { ROLE_LABELS } from './constants';
 import BigNumber from 'bignumber.js';
 
 const web3 = window.web3;

@@ -23,9 +23,9 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import { PRODUCT_STATUS, PRODUCT } from '../constants'
-import { toWei, fromWei } from '../utilities'
+import { fromWei } from '../utilities'
 import BackNavigation from '@/components/BackNavigation'
 
 import Marketplace from '../services/marketplace.js'

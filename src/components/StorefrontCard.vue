@@ -9,28 +9,30 @@
 </template>
 
 <script>
-import { toWei, fromWei } from '../utilities'
-import { STOREFRONT } from '../constants'
+import { fromWei } from "../utilities";
+import { STOREFRONT } from "../constants";
 
 export default {
-	name: 'StorefrontCard',
-	props:{
-		storefront: Array
-	},
-	data() {
-		return {
-			STOREFRONT
-		}
-	},
-	computed: {
-		balanceInEther() {
-			return fromWei(this.storefront[STOREFRONT.BALANCE]);
-		}
-	},
-	methods: {
-		  goToStorefront() {
-      	this.$router.push({ path: `storefront/${this.storefront[STOREFRONT.STOREFRONT_ID]}`})
-    }     
-	}
-}
+  name: "StorefrontCard",
+  props: {
+    storefront: Array
+  },
+  data() {
+    return {
+      STOREFRONT
+    };
+  },
+  computed: {
+    balanceInEther() {
+      return fromWei(this.storefront[STOREFRONT.BALANCE]);
+    }
+  },
+  methods: {
+    goToStorefront() {
+      this.$router.push({
+        path: `storefront/${this.storefront[STOREFRONT.STOREFRONT_ID]}`
+      });
+    }
+  }
+};
 </script>

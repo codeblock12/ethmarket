@@ -24,6 +24,15 @@ export default class Marketplace {
     })       
   }
 
+  getOwnerAddress () {
+    let self = this;
+    return new Promise (function (resolve, reject) {
+      self.instance.owner.call()
+      .then( address => resolve(address))
+      .catch ( err => reject(err))
+    }) 
+  }  
+
   getRoleByAddress (_address) {
     let self = this;
     return new Promise (function (resolve, reject) {
