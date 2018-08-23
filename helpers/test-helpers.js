@@ -1,5 +1,3 @@
-const PREFIX = "VM Exception while processing transaction: ";
-
 export async function tryCatch(promise, message) {
     try {
         await promise;

@@ -64,11 +64,7 @@ contract('storefront', accounts => {
       assert.equal(deactivatedStorefront[STOREFRONT.IS_ACTIVE], false);
     })  
     
-    it('should be able to withdraw ', async () => {
-      await storefront.deactivateStorefront(0, {from: StoreOwner});      
-      let deactivatedStorefront = await storefront.storefronts.call(0);
-      assert.equal(deactivatedStorefront[STOREFRONT.IS_ACTIVE], false);
-    })      
+    xit('should be able to withdraw ', async () => {})      
   })
 
   describe('when creating a product as a storefront owner', async () => {
