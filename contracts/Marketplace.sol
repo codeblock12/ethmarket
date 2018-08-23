@@ -1,10 +1,8 @@
 pragma solidity ^0.4.24;
 
 import "./Storefront.sol";
-import "./Shopper.sol";
 
-
-contract Marketplace is Storefront, Shopper {
+contract Marketplace is Storefront {
     constructor() public {
         role[msg.sender] = adminRole; 
     }

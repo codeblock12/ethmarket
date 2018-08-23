@@ -72,4 +72,28 @@ contract('storefront', accounts => {
     xit('should update the product id', () => {});
     xit('should be able to update the product status', () => {});
   })
+
+  describe('when buying products as a shopper', () => {
+    let storefront;
+
+    before( 'setup instance', async () => {
+      storefront = await Storefront.deployed();
+      await storefront.addAdmin(Admin, {from: Owner});
+      await storefront.addStoreOwner(StoreOwner, {from: Admin});
+      await storefront.createStorefront('mockStorefrontName', {from: StoreOwner}); 
+      await storefront.addProduct(0, 'mockProduct', 1000, 100, {from: StoreOwner});     
+    })
+
+    it('should be able to buy a product', async () => {
+      await storefront.buyProduct(0, 0, 1, {from: Shopper, value: 1000});
+      let orderCount = await storefront.getOrderCountByAddress.call(Shopper)
+      assert.equal(orderCount, 1);
+    })  
+
+    it('should revert if not enough money is sent', async () => {
+      tryCatch(await storefront.buyProduct(0, 0, 1, {from: Shopper, value: 1000}));
+    });
+
+    xit('should create an order of bought products', async() => {})
+  })  
 })
