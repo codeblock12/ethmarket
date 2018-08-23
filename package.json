@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint",
     "start:blockchain:client": "bash ./scripts/start-blockchain-client.sh",
     "stop:blockchain:client": "bash ./scripts/stop-blockchain-client.sh",
-    "test": "npm run start:blockchain:client & truffle migrate --reset --compile-all && truffle test --network development",
+    "test": "npm run start:blockchain:client 2>/dev/null & truffle migrate --reset --compile-all && truffle test --network development",
     "posttest": "npm run stop:blockchain:client"
   },
   "dependencies": {
