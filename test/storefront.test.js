@@ -21,10 +21,10 @@ contract('storefront', accounts => {
       storefront = await Storefront.deployed();
       await storefront.addAdmin(Admin, {from: Owner});
       await storefront.addStoreOwner(StoreOwner, {from: Admin});
-      await storefront.createStorefront(storeName, {from: StoreOwner, gas: 6000000});      
+      await storefront.createStorefront(storeName, {from: StoreOwner});      
     })
 
-    it('should create a storefront with inital settings', async () => {
+    it('should create a storefront successfully', async () => {
       let newStorefront = await storefront.storefronts.call(0);
       assert.equal(newStorefront[STOREFRONT.STOREFRONT_ID], 0);
       assert.equal(newStorefront[STOREFRONT.OWNER], StoreOwner);
@@ -32,20 +32,50 @@ contract('storefront', accounts => {
       assert.equal(newStorefront[STOREFRONT.IS_ACTIVE], true);
     })      
 
+    xit('should only allow storefront owners to create', async () => {
+      let newStorefront = await storefront.storefronts.call(0);
+      assert.equal(newStorefront[STOREFRONT.STOREFRONT_ID], 0);
+      assert.equal(newStorefront[STOREFRONT.OWNER], StoreOwner);
+      assert.equal(newStorefront[STOREFRONT.BALANCE], 0);
+      assert.equal(newStorefront[STOREFRONT.IS_ACTIVE], true);
+    })        
+
     it('should return list of ids of owned storefronts', async () => {
       let ownedStorefront = await storefront.getOwnedStorefronts.call(StoreOwner);
       assert.equal(ownedStorefront.length, 1);
       assert.equal(ownedStorefront[0], 0);
     })  
     
-    xit('should update storefrontId with new storefront creation', async () => {
-      let role = await storefront.role.call(Owner);
-      assert.equal(role, ROLES.ADMIN);
+    it('should update storefront count', async () => {
+      let count = await storefront.storefrontCount.call();
+      assert.equal(count, 1);
+      await storefront.createStorefront("newStorefront", {from: StoreOwner});      
+      count = await storefront.storefrontCount.call();
+      assert.equal(count, 2);
+    })  
+
+    it('should be able to modify storefront name', async () => {
+      await storefront.modifyStorefrontName(0, 'modifiedStorefront', {from: StoreOwner});      
+      let modifiedStorefront = await storefront.storefronts.call(0);
+      assert.equal(modifiedStorefront[STOREFRONT.NAME], 'modifiedStorefront');
+    })        
+    
+    it('should update status of deactivated storefronts', async () => {
+      await storefront.deactivateStorefront(0, {from: StoreOwner});      
+      let deactivatedStorefront = await storefront.storefronts.call(0);
+      assert.equal(deactivatedStorefront[STOREFRONT.IS_ACTIVE], false);
     })  
     
-    xit('should update status of deactivated storefronts', async () => {
-      let role = await storefront.role.call(Owner);
-      assert.equal(role, ROLES.ADMIN);
-    })     
+    it('should be able to withdraw ', async () => {
+      await storefront.deactivateStorefront(0, {from: StoreOwner});      
+      let deactivatedStorefront = await storefront.storefronts.call(0);
+      assert.equal(deactivatedStorefront[STOREFRONT.IS_ACTIVE], false);
+    })      
+  })
+
+  describe('when creating a product as a storefront owner', async () => {
+    xit('should create a product succesfully', () => {});
+    xit('should update the product id', () => {});
+    xit('should be able to update the product status', () => {});
   })
 })
