@@ -5,6 +5,8 @@
 		
 		<StorefrontSettings />
 		
+		<a href="#" class="btn" @click="refreshProducts" >Refresh Products</a>
+		
 		<ProductCard
 			v-for="(product, index) in products"
 			:key="index"

@@ -22,7 +22,6 @@
 				<label>Price</label> <input v-model="productInput.price"/>
 				<label>Quantity</label> <input v-model="productInput.quantity"/>
 				<a href="#" class="btn" @click="createProduct" >create Product</a>
-				<a href="#" class="btn" @click="refreshProducts" >Refresh Products</a>
 		</div>
 
   </div>
@@ -98,10 +97,7 @@ export default {
     },
     refreshStorefront() {
       refreshStorefront(this);
-    },
-   refreshProducts() {
-      refreshProducts(this);
-    }    
+    }   
   },
   async mounted() {
     await market.init();
@@ -112,15 +108,6 @@ export default {
 async function refreshStorefront(_vm) {
   let storefront = await market.getStorefrontsById(_vm.storefrontId);
   _vm.storefrontData = storefront;
-}
-
-async function refreshProducts(_vm) {
-  let storeSize = await market.getProductCountByStorefrontId(_vm.storefrontId);
-  _vm.productsData = [];
-  for (let i = 0; i < storeSize; i++) {
-    let product = await market.getProduct(_vm.storefrontId, i);
-    _vm.productsData.push(product);
-  }
 }
 </script>
 
