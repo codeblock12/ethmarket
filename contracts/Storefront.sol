@@ -54,8 +54,8 @@ contract Storefront is Core {
         returns (bool success) 
     {       
         products[_storefrontId].push(Product({
-            storefrontId: _storefrontId,
             productId: products[_storefrontId].length,
+            storefrontId: _storefrontId,
             name: _name,
             price: _price,
             quantity: _quantity,
@@ -80,8 +80,8 @@ contract Storefront is Core {
     {
         Product memory product = products[_storefrontId][_productId];
         return (
-            product.storefrontId, 
             product.productId, 
+            product.storefrontId, 
             product.name, 
             product.price, 
             product.quantity, 
