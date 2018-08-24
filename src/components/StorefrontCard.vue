@@ -3,13 +3,11 @@
 		<div><label>Id</label> {{storefront[STOREFRONT.STOREFRONT_ID]}} </div>
 			<div><label>Owner</label> {{storefront[STOREFRONT.OWNER]}} </div>
 			<div> <label>Name</label> {{storefront[STOREFRONT.NAME]}} </div>
-			<div> <label>Balance</label> {{balanceInEther}} </div>
 			<div> <label>Active</label> {{storefront[STOREFRONT.IS_ACTIVE]}} </div>
 		</div>
 </template>
 
 <script>
-import { fromWei } from "../utilities";
 import { STOREFRONT } from "../constants";
 
 export default {
@@ -21,11 +19,6 @@ export default {
     return {
       STOREFRONT
     };
-  },
-  computed: {
-    balanceInEther() {
-      return fromWei(this.storefront[STOREFRONT.BALANCE]);
-    }
   },
   methods: {
     goToStorefront() {

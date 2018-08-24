@@ -1,12 +1,16 @@
 <template>
-  <div>
-    <a href="#" @click="goBack">Go Back</a>
+  <div class="nav-bar">
+    <a href="#" class="go-back-btn" @click="goBack">Go Back</a>
+    <div>{{title}}</div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'BackNavigation',
+  props: {
+    title: String
+  },
   methods: {
 		goBack () {
 			window.history.length > 1
@@ -16,3 +20,11 @@ export default {
   }
 }
 </script>
+<style scoped>
+.go-back-btn {
+  color: white;
+}
+.nav-bar {
+  margin-bottom: 20px;
+}
+</style>

@@ -37,13 +37,6 @@ export default new Vuex.Store({
       state.notification = message;
     }
   },
-  getters: {
-    getStorefrontOwners(state) {
-      return state.storefronts
-      .map( store => store[STOREFRONT.OWNER])
-      // .reduce((x, y) => x.includes(y) ? x : [...x, y], []) //get unique addresses
-    } 
-  },
   actions: {
     async setOwnerAccount({ commit }){
       await market.init();
