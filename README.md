@@ -15,12 +15,12 @@ The central marketplace is managed by a group of administrators. Admins allow st
   #Install truffle
   npm install -g truffle
   #Install metafox in browser extension (https://metamask.io/)
-`
+```
 ### Run local blockchain
 ```bash
   #Run ganachi (record mnemonic for use in metafox) 
   ganachi-cli
-`
+```
 
 ### Run local UI instance (In new terminal window)
 ```bash
@@ -34,6 +34,6 @@ The central marketplace is managed by a group of administrators. Admins allow st
   npm run serve
   #Run unit tests
   npm test
-`
+```
 
 ### Reference docs folder for description of features, and technical details.
