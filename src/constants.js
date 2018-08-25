@@ -51,3 +51,21 @@ export const WEI = '1000000000000000000';
 export const GWEI = '1000000000';
 
 export const NOTIFICATION_TIMEOUT = '5000';
+
+export const TOASTR_SETTINGS = {
+		"closeButton": false,
+		"debug": false,
+		"newestOnTop": false,
+		"progressBar": false,
+		"positionClass": "toast-bottom-full-width",
+		"preventDuplicates": false,
+		"onclick": null,
+		"showDuration": "300",
+		"hideDuration": "1000",
+		"timeOut": "5000",
+		"extendedTimeOut": "1000",
+		"showEasing": "swing",
+		"hideEasing": "linear",
+		"showMethod": "fadeIn",
+		"hideMethod": "fadeOut"
+}

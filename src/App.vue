@@ -26,6 +26,8 @@ export default {
 </script>
 
 <style>
+@import '../node_modules/toastr/toastr.scss';
+
 body {
   background-color: #2c3e50
 }

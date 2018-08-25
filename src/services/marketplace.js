@@ -1,5 +1,6 @@
 import { default as contract } from 'truffle-contract'
 import marketplaceArtifact from '../../build/contracts/Marketplace.json'
+import { defaultErrorNotification } from '../utilities'
 
 const web3 = window.web3;
 
@@ -20,7 +21,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.contract.deployed()
       .then(instance => resolve(instance))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })       
   }
 
@@ -29,7 +30,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.owner.call()
       .then( address => resolve(address))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     }) 
   }  
 
@@ -38,7 +39,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.role.call(_address)
       .then( role => resolve(role))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     }) 
   }
 
@@ -49,7 +50,7 @@ export default class Marketplace {
         _address, 
         {from: _caller, gas: defaultGasLimit})
       .then( role => resolve(role))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     }) 
   }
 
@@ -60,7 +61,7 @@ export default class Marketplace {
         _address,
         {from: _caller, gas: defaultGasLimit})
       .then( role => resolve(role))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     }) 
   }
 
@@ -71,7 +72,7 @@ export default class Marketplace {
         _address,
         {from: _caller, gas: defaultGasLimit})
       .then( role => resolve(role))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     }) 
   }
 
@@ -82,7 +83,7 @@ export default class Marketplace {
         _address, 
         {from: _caller, gas: defaultGasLimit})
       .then( role => resolve(role))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     }) 
   }
 
@@ -93,7 +94,7 @@ export default class Marketplace {
         _name, 
         {from: _caller, gas: highGasLimit})
       .then( role => resolve(role))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })     
   }
 
@@ -102,7 +103,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.getOwnedStorefronts.call(_address)
       .then( storefronts => resolve(storefronts))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })     
   }  
   
@@ -111,7 +112,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.storefronts.call(_id)
       .then( storefront => resolve(storefront))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })     
   }    
 
@@ -120,7 +121,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.storefrontCount.call()
       .then( storefrontCount => resolve(storefrontCount))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })     
   }
 
@@ -131,7 +132,7 @@ export default class Marketplace {
         _storefrontId, 
         {from: _caller, gas: highGasLimit})
       .then( success => resolve(success))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })   
   }
 
@@ -142,7 +143,7 @@ export default class Marketplace {
          _name,
          {from: _caller, gas: highGasLimit})
       .then( success => resolve(success))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })   
   }
 
@@ -153,7 +154,7 @@ export default class Marketplace {
         _storefrontId,
         {from: _caller, gas: highGasLimit})
       .then( success => resolve(success))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })   
   }
 
@@ -167,7 +168,7 @@ export default class Marketplace {
         _quantity,
         {from: _caller, gas: highGasLimit})
       .then( success => resolve(success))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })   
   }
   getProductCountByStorefrontId(_storefrontId) {
@@ -175,7 +176,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.getProductCountByStorefrontId.call(_storefrontId)
       .then( size => resolve(size))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })     
   }
 
@@ -184,7 +185,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.getProductByProductId.call(_storefrontId, _productId)
       .then( product => resolve(product))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })     
   }
 
@@ -196,7 +197,7 @@ export default class Marketplace {
         _productId,
         {from: _caller, gas: highGasLimit})
       .then( success => resolve(success))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })   
   }
 
@@ -209,7 +210,7 @@ export default class Marketplace {
         _quantity,
         {from: _caller, value: _total, gas: highGasLimit})
       .then( success => resolve(success))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })       
   }
 
@@ -218,7 +219,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.getOrderCountByAddress.call(_address)
       .then( size => resolve(size))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })     
   }
 
@@ -227,7 +228,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.getOrder(_address, _orderId)
       .then( product => resolve(product))
-      .catch ( err => reject(err))
+      .catch ( defaultErrorNotification )
     })     
   }
 

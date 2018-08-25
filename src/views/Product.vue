@@ -10,7 +10,7 @@
 			<div> Status: {{statusLabel}} </div>
 		</div>
 
-		<a href="#" class="btn" @click="deactivateProduct"> Deactivate </a>
+		<a href="#" class="btn" v-if="isStoreOwner" @click="deactivateProduct"> Cancel Product Listing </a>
 
 		<div>
         <label>Quantity</label> <input v-model="quantityToBuyInput"/>
@@ -23,7 +23,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { PRODUCT } from '../constants'
+import { PRODUCT, ROLES } from '../constants'
 import { fromWei, getProductStatusById } from '../utilities'
 import BackNavigation from '@/components/BackNavigation'
 
@@ -47,7 +47,8 @@ export default {
 	},
 	computed: {
 		...mapState({
-			currentAccount: state => state.currentAccount
+			currentAccount: state => state.currentAccount,
+			currentRole: state => state.currentRole
 		}),
 		product() {
 			return this.productData || {};
@@ -61,7 +62,10 @@ export default {
 		},
 		statusLabel(){
 			return getProductStatusById(this.product[this.productLabel.STATUS])
-		}		
+		},
+    isStoreOwner(){
+      return this.currentRole == ROLES.STORE_OWNER;
+    }				
 	},
 	methods: {
 		async deactivateProduct(){
