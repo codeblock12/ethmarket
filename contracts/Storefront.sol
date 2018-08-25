@@ -2,19 +2,28 @@ pragma solidity ^0.4.24;
 
 import "./Core.sol";
 
+/** @Storefront */
 contract Storefront is Core {
 
     using SafeMath for uint;
 
-    function getOwnedStorefronts(address account)
+    /** @dev Retrieves the storefront(s) created by an address
+      * @param _account address of potential storefront owner
+      * @return storefrontIds an array of storefront ids   
+      */
+    function getOwnedStorefronts(address _account)
         public
         view
-        returns (uint[] memory) 
+        returns (uint[] memory storefrontIds) 
     {
-        return ownedStorefronts[account];
+        return ownedStorefronts[_account];
     }
 
-    function createStorefront(string storeName) 
+    /** @dev Create a storefront by a storefront owner
+      * @param _storeName name of storefront
+      * @return success function ran without error   
+      */    
+    function createStorefront(string _storeName) 
         public 
         isStoreOwnerOnly 
         returns (bool success) 
@@ -22,18 +31,24 @@ contract Storefront is Core {
        storefronts.push(Storefront({
             storefrontId: storefrontCount,
             owner: msg.sender,
-            name: storeName,
+            name: _storeName,
             balance: 0,
             isActive: true
        }));
        ownedStorefronts[msg.sender].push(storefrontCount);
-       storefrontCount += 1;
+       storefrontCount = storefrontCount.add(1);
        emit StorefrontCreate(storefrontCount);
        return true;
     }
 
+    /** @dev Deactivate an active storefront
+      * @param _storefrontId id of the storefront
+      * @return success function ran without error   
+      */    
     function deactivateStorefront(uint _storefrontId) 
-        public ownsStorefront(_storefrontId) 
+        public 
+        ownsStorefront(_storefrontId) 
+        isActiveStorefront(_storefrontId) 
         returns (bool success) 
     {
         storefronts[_storefrontId].isActive = false;
@@ -41,9 +56,15 @@ contract Storefront is Core {
         return true;
     }
 
+    /** @dev Modify a storefront name
+      * @param _storefrontId id of the storefront
+      * @param _name new name of the storefront
+      * @return success function ran without error   
+      */ 
     function modifyStorefrontName(uint _storefrontId, string _name) 
         public 
-        ownsStorefront(_storefrontId) 
+        ownsStorefront(_storefrontId)
+        isActiveStorefront(_storefrontId) 
         returns (bool success) 
     {
         storefronts[_storefrontId].name = _name;
@@ -51,9 +72,17 @@ contract Storefront is Core {
         return true;
     }
 
+    /** @dev Add a new product to a storefront
+      * @param _storefrontId id of the storefront
+      * @param _name name of the product
+      * @param _price price of the product
+      * @param _quantity quantity of the product
+      * @return success function ran without error   
+      */ 
     function addProduct(uint _storefrontId, string _name, uint _price, uint _quantity) 
         public 
-        ownsStorefront(_storefrontId) 
+        ownsStorefront(_storefrontId)
+        isActiveStorefront(_storefrontId)
         returns (bool success) 
     {       
         products[_storefrontId].push(Product({
@@ -68,6 +97,10 @@ contract Storefront is Core {
         return true;
     }
 
+    /** @dev Retrieves the number of products in a storefront
+      * @param _storefrontId id of the storefront
+      * @return size the number of products   
+      */ 
    function getProductCountByStorefrontId(uint _storefrontId)
         public
         view
@@ -76,7 +109,12 @@ contract Storefront is Core {
         return products[_storefrontId].length;
     }
 
-   function getProductsByProductId(uint _storefrontId, uint _productId)
+    /** @dev Retrieves a product
+      * @param _storefrontId id of the storefront
+      * @param _productId id of the product
+      * @return tuple of a product  
+      */ 
+   function getProductByProductId(uint _storefrontId, uint _productId)
         public
         view
         returns (uint, uint, string, uint, uint, ProductStatus) 
@@ -91,8 +129,14 @@ contract Storefront is Core {
             product.status);
     }            
 
+    /** @dev Deactivate a listed product
+      * @param _storefrontId id of the storefront
+      * @param _productId id of the product
+      * @return tuple of a product  
+      */ 
     function deactivateProduct(uint _storefrontId, uint _productId) 
         public 
+        isListedProduct(_storefrontId, _productId)        
         ownsStorefront(_storefrontId) 
         returns (bool success) 
     {
@@ -101,6 +145,10 @@ contract Storefront is Core {
         return true;        
     }
 
+    /** @dev Withdraw balance from a storefront regardless of isActive status
+      * @param _storefrontId id of the storefront
+      * @return success function ran without error   
+      */ 
     function withdrawStoreFunds(uint _storefrontId) 
         public 
         whenNotPaused
@@ -118,6 +166,10 @@ contract Storefront is Core {
         return true;        
     }
 
+    /** @dev Retrieves the number of order of a purchaser
+      * @param _address address of purchaser
+      * @return size number of orders 
+      */ 
     function getOrderCountByAddress(address _address)
         public
         view
@@ -126,12 +178,17 @@ contract Storefront is Core {
         return orders[_address].length;
     }
 
-    function getOrder(address _address, uint orderId)
+    /** @dev Retrieves a order
+      * @param _address address of purchaser
+      * @param _orderId orderId of an order
+      * @return tuple of a order
+      */ 
+    function getOrder(address _address, uint _orderId)
         public
         view
         returns (uint, uint, uint, string, uint, uint, uint) 
     {
-        Order memory order = orders[_address][orderId];
+        Order memory order = orders[_address][_orderId];
         return (
             order.orderId,
             order.productId,
@@ -143,12 +200,19 @@ contract Storefront is Core {
         );
     }
 
+    /** @dev Purchase a product(s) from  a storefront
+      * @param _storefrontId id of the storefront
+      * @param _productId id of the product
+      * @param _quantity number of products to be purchased
+      * @return success function ran without error   
+      */ 
     function buyProduct(uint _storefrontId, uint _productId, uint _quantity) 
         public
         nonReentrant
         whenNotPaused                
         productAvailable(_storefrontId, _productId, _quantity) 
-        paidEnough(_storefrontId, _productId, _quantity) 
+        paidEnough(_storefrontId, _productId, _quantity)
+        isListedProduct(_storefrontId, _productId) 
         payable 
         returns (bool success) 
     {      

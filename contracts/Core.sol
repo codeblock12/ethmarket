@@ -5,6 +5,7 @@ import "./libraries/Pausable.sol";
 import "./libraries/ReentrancyGuard.sol";
 import "./MarketStorage.sol";
 
+/** @title Core */
 contract Core is Ownable, MarketStorage, Pausable, ReentrancyGuard {
     
     // role storage
@@ -18,7 +19,10 @@ contract Core is Ownable, MarketStorage, Pausable, ReentrancyGuard {
     modifier isStoreOwnerOnly(){ require(role[msg.sender] == storeOwnerRole); _;}    
     modifier isShopperOnly(){ require(role[msg.sender] == shopperRole); _;}
 
-    // Owner Actions
+    /** @dev Gives an address the admin role
+      * @param _adminAddress address of the recipient of the admin role
+      * @return success function ran without error   
+      */
     function addAdmin(address _adminAddress) 
         public 
         onlyOwner 
@@ -28,6 +32,10 @@ contract Core is Ownable, MarketStorage, Pausable, ReentrancyGuard {
         return true;
     }
 
+    /** @dev Remove the admin role from an address by giving the user the default role of Shopper
+      * @param _adminAddress address of the recipient of the shopper role
+      * @return success function ran without error   
+      */
     function removeAdmin(address _adminAddress) 
         public 
         onlyOwner 
@@ -37,8 +45,10 @@ contract Core is Ownable, MarketStorage, Pausable, ReentrancyGuard {
         return true;
     }
 
-    // Admin Actions
-
+    /** @dev Gives an address the Storeowner role
+      * @param _storeOwnerAddress address of the recipient of the storeowner role
+      * @return success function ran without error   
+      */
     function addStoreOwner(address _storeOwnerAddress) 
         public 
         isAdminOnly 
@@ -49,6 +59,10 @@ contract Core is Ownable, MarketStorage, Pausable, ReentrancyGuard {
 
     }
 
+    /** @dev Remove the storeowner role from an address by giving the user the default role of Shopper
+      * @param _storeOwnerAddress address of the recipient of the shopper role
+      * @return success function ran without error   
+      */
     function removeStoreOwner(address _storeOwnerAddress) 
         public 
         isAdminOnly 

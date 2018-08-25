@@ -182,7 +182,7 @@ export default class Marketplace {
   getProduct(_storefrontId, _productId) {
     let self = this;
     return new Promise (function (resolve, reject) {
-      self.instance.getProductsByProductId.call(_storefrontId, _productId)
+      self.instance.getProductByProductId.call(_storefrontId, _productId)
       .then( product => resolve(product))
       .catch ( err => reject(err))
     })     
