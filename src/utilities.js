@@ -1,10 +1,14 @@
-import { ROLE_LABELS } from './constants';
+import { ROLE_LABELS, PRODUCT_STATUS_LABELS } from './constants';
 import BigNumber from 'bignumber.js';
 
 const web3 = window.web3;
 
 export function getRoleById (_roleId) {
     return ROLE_LABELS[_roleId];
+}
+
+export function getProductStatusById (_statusId) {
+  return PRODUCT_STATUS_LABELS[_statusId];
 }
 
 export function toWei (_ethVal, _unit) {

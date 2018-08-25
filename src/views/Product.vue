@@ -3,12 +3,11 @@
 		<back-navigation />
 		StoreId: {{storefrontId}}
 		<h1>Product</h1>
-		{{product}}
 		<div class="card">
-			<div> Name:{{product[productLabel.NAME]}} </div>
-			<div> Price:{{priceInEther}} </div>
-			<div> Quantity:{{product[productLabel.QUANTITY]}} </div>
-			<div> Status:{{product[productLabel.STATUS]}} </div>
+			<div> Name: {{product[productLabel.NAME]}} </div>
+			<div> Price: {{priceInEther}} </div>
+			<div> Quantity: {{product[productLabel.QUANTITY]}} </div>
+			<div> Status: {{statusLabel}} </div>
 		</div>
 
 		<a href="#" class="btn" @click="deactivateProduct"> Deactivate </a>
@@ -24,8 +23,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { PRODUCT_STATUS, PRODUCT } from '../constants'
-import { fromWei } from '../utilities'
+import { PRODUCT } from '../constants'
+import { fromWei, getProductStatusById } from '../utilities'
 import BackNavigation from '@/components/BackNavigation'
 
 import Marketplace from '../services/marketplace.js'
@@ -59,6 +58,9 @@ export default {
 		totalInEther() {
 			let total = this.product[PRODUCT.PRICE] * this.quantityToBuyInput;
 			return fromWei(total);
+		},
+		statusLabel(){
+			return getProductStatusById(this.product[this.productLabel.STATUS])
 		}		
 	},
 	methods: {

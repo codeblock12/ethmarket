@@ -15,6 +15,11 @@ export const PRODUCT_STATUS = {
 	'LISTED': '1'
 }
 
+export const PRODUCT_STATUS_LABELS = {
+	'0': 'Cancelled',
+	'1': 'Listed'
+}
+
 export const STOREFRONT = {
 	'STOREFRONT_ID': '0',
 	'OWNER': '1',
