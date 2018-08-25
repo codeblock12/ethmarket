@@ -2,7 +2,7 @@ pragma solidity ^0.4.24;
 
 import "./Core.sol";
 
-/** @Storefront */
+/** @title Storefront */
 contract Storefront is Core {
 
     using SafeMath for uint;
@@ -212,15 +212,14 @@ contract Storefront is Core {
         whenNotPaused                
         productAvailable(_storefrontId, _productId, _quantity) 
         paidEnough(_storefrontId, _productId, _quantity)
-        isListedProduct(_storefrontId, _productId) 
         payable 
         returns (bool success) 
     {      
-        // Dededuct from seller
-        products[_storefrontId][_productId].quantity = products[_storefrontId][_productId].quantity.sub(_quantity);
+				Product storage p = products[_storefrontId][_productId];	        
+				// Dededuct from seller
+        p.quantity = p.quantity.sub(_quantity);
         storefronts[_storefrontId].balance = storefronts[_storefrontId].balance.add(msg.value);
         // Transfer product
-        Product memory p = products[_storefrontId][_productId];
         orders[msg.sender].push(Order({
             orderId: orders[msg.sender].length,
             productId: p.productId,
@@ -232,6 +231,7 @@ contract Storefront is Core {
         }));
         emit ProductPurchased(_storefrontId, _productId, orders[msg.sender].length);
         return true;
-    }       
+    }
+		
 }
 
