@@ -1,22 +1,22 @@
 <template>
   <div>
 		<back-navigation />
-		StoreId: {{storefrontId}}
 		<h1>Product</h1>
-		<div class="card">
-			<div> Name: {{product[productLabel.NAME]}} </div>
-			<div> Price: {{priceInEther}} </div>
-			<div> Quantity: {{product[productLabel.QUANTITY]}} </div>
-			<div> Status: {{statusLabel}} </div>
+		<div class="card margin-below">
+			<div> Name {{product[productLabel.NAME]}} </div>
+			<div> Price {{priceInEther}} </div>
+			<div> Quantity {{product[productLabel.QUANTITY]}} </div>
+			<div> Status {{statusLabel}} </div>
 		</div>
 
 		<a href="#" class="btn" v-if="isStoreOwner" @click="deactivateProduct"> Cancel Product Listing </a>
 
-		<div>
+		<div class="margin-below">
         <label>Quantity</label> <input v-model="quantityToBuyInput"/>
 				<a href="#" class="btn" @click="buyProduct"> Buy </a>
-				<div> Total:{{totalInEther}} Ether</div>
     </div>
+		
+		<div> Total {{totalInEther}} Ether</div>
 
   </div>
 </template>

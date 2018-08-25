@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="card" @click="goToProduct">
-        <div> Name:{{product[PRODUCT.NAME]}} </div>
-        <div> Price:{{priceInEther}} </div>
-        <div> Quantity:{{product[PRODUCT.QUANTITY]}} </div>
-        <div> Status:{{product[PRODUCT.STATUS]}} </div>
+        <div> Name {{product[PRODUCT.NAME]}} </div>
+        <div> Price {{priceInEther}} </div>
+        <div> Quantity {{product[PRODUCT.QUANTITY]}} </div>
+        <div> Status {{product[PRODUCT.STATUS]}} </div>
     </div>
   </div>
 </template>

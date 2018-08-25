@@ -75,4 +75,8 @@ label {
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(255, 255, 255, 0.2);
 }
+
+.margin-below {
+  margin-bottom: 20px;
+}  
 </style>

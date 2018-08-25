@@ -3,7 +3,7 @@
 
 		<back-navigation/>
 		
-		<StorefrontSettings />
+		<StorefrontSettings class="margin-below"/>
 		
 		<a href="#" class="btn" @click="refreshProducts" >Refresh Products</a>
 		
@@ -68,9 +68,3 @@ async function refreshProducts(_vm) {
   }
 }
 </script>
-
-<style scoped>
-	ul {
-  	list-style: none;
-	}
-</style>
