@@ -69,7 +69,7 @@ contract MarketStorage {
     modifier ownsStorefront(uint _storefrontId){ require(msg.sender == storefronts[_storefrontId].owner); _;}
     modifier productAvailable (uint _storefrontId, uint _productId, uint _quantity) { 
         Product memory p = products[_storefrontId][_productId];
-        require(p.quantity >= _quantity && p.status == ProductStatus.Listed); 
+        require(p.quantity >= _quantity && p.status == ProductStatus.Listed && storefronts[_storefrontId].isActive == true); 
         _; 
     }
     modifier isActiveStorefront(uint _storefrontId) { require(storefronts[_storefrontId].isActive == true); _;}
