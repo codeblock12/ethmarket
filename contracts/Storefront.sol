@@ -3,6 +3,9 @@ pragma solidity ^0.4.24;
 import "./Core.sol";
 
 contract Storefront is Core {
+
+    using SafeMath for uint;
+
     function getOwnedStorefronts(address account)
         public
         view
@@ -150,8 +153,8 @@ contract Storefront is Core {
         returns (bool success) 
     {      
         // Dededuct from seller
-        products[_storefrontId][_productId].quantity -= _quantity;
-        storefronts[_storefrontId].balance += msg.value;
+        products[_storefrontId][_productId].quantity = products[_storefrontId][_productId].quantity.sub(_quantity);
+        storefronts[_storefrontId].balance = storefronts[_storefrontId].balance.add(msg.value);
         // Transfer product
         Product memory p = products[_storefrontId][_productId];
         orders[msg.sender].push(Order({
@@ -165,6 +168,6 @@ contract Storefront is Core {
         }));
         emit ProductPurchased(_storefrontId, _productId, orders[msg.sender].length);
         return true;
-    }        
+    }       
 }
 
