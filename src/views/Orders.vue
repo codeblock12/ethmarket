@@ -31,9 +31,6 @@ export default {
 		}),		
 		orders() {
 			return this.orderData;
-		},
-		priceInEther() {
-			return fromWei(this.orderData[this.orderLabel.PRICE]);
 		}
 	},
 	async mounted(){

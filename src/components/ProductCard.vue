@@ -12,9 +12,6 @@
 <script>
 import { PRODUCT } from '../constants'
 import { fromWei } from '../utilities'
-import Marketplace from '../services/marketplace.js'
-
-let market = new Marketplace();
 
 export default {
 	name: 'ProductCard',

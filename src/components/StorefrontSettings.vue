@@ -113,6 +113,6 @@ async function refreshStorefront(_vm) {
 
 <style scoped>
 	ul {
-  	list-style: none;
+		list-style: none;
 	}
 </style>

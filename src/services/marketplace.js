@@ -21,7 +21,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.contract.deployed()
       .then(instance => resolve(instance))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })       
   }
 
@@ -30,7 +30,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.owner.call()
       .then( address => resolve(address))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     }) 
   }  
 
@@ -39,7 +39,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.role.call(_address)
       .then( role => resolve(role))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     }) 
   }
 
@@ -50,7 +50,7 @@ export default class Marketplace {
         _address, 
         {from: _caller, gas: defaultGasLimit})
       .then( role => resolve(role))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     }) 
   }
 
@@ -61,7 +61,7 @@ export default class Marketplace {
         _address,
         {from: _caller, gas: defaultGasLimit})
       .then( role => resolve(role))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     }) 
   }
 
@@ -72,7 +72,7 @@ export default class Marketplace {
         _address,
         {from: _caller, gas: defaultGasLimit})
       .then( role => resolve(role))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     }) 
   }
 
@@ -83,7 +83,7 @@ export default class Marketplace {
         _address, 
         {from: _caller, gas: defaultGasLimit})
       .then( role => resolve(role))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     }) 
   }
 
@@ -94,7 +94,7 @@ export default class Marketplace {
         _name, 
         {from: _caller, gas: highGasLimit})
       .then( role => resolve(role))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })     
   }
 
@@ -103,7 +103,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.getOwnedStorefronts.call(_address)
       .then( storefronts => resolve(storefronts))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })     
   }  
   
@@ -112,7 +112,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.storefronts.call(_id)
       .then( storefront => resolve(storefront))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })     
   }    
 
@@ -121,7 +121,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.storefrontCount.call()
       .then( storefrontCount => resolve(storefrontCount))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })     
   }
 
@@ -132,7 +132,7 @@ export default class Marketplace {
         _storefrontId, 
         {from: _caller, gas: highGasLimit})
       .then( success => resolve(success))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })   
   }
 
@@ -143,7 +143,7 @@ export default class Marketplace {
          _name,
          {from: _caller, gas: highGasLimit})
       .then( success => resolve(success))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })   
   }
 
@@ -154,7 +154,7 @@ export default class Marketplace {
         _storefrontId,
         {from: _caller, gas: highGasLimit})
       .then( success => resolve(success))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })   
   }
 
@@ -168,7 +168,7 @@ export default class Marketplace {
         _quantity,
         {from: _caller, gas: highGasLimit})
       .then( success => resolve(success))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })   
   }
   getProductCountByStorefrontId(_storefrontId) {
@@ -176,7 +176,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.getProductCountByStorefrontId.call(_storefrontId)
       .then( size => resolve(size))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })     
   }
 
@@ -185,7 +185,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.getProductByProductId.call(_storefrontId, _productId)
       .then( product => resolve(product))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })     
   }
 
@@ -197,7 +197,7 @@ export default class Marketplace {
         _productId,
         {from: _caller, gas: highGasLimit})
       .then( success => resolve(success))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })   
   }
 
@@ -210,7 +210,7 @@ export default class Marketplace {
         _quantity,
         {from: _caller, value: _total, gas: highGasLimit})
       .then( success => resolve(success))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })       
   }
 
@@ -219,7 +219,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.getOrderCountByAddress.call(_address)
       .then( size => resolve(size))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })     
   }
 
@@ -228,7 +228,7 @@ export default class Marketplace {
     return new Promise (function (resolve, reject) {
       self.instance.getOrder(_address, _orderId)
       .then( product => resolve(product))
-      .catch ( defaultErrorNotification )
+      .catch ( reject(defaultErrorNotification) )
     })     
   }
 

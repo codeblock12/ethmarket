@@ -14,9 +14,6 @@
 
 <script>
 import { mapActions } from 'vuex'
-import Marketplace from '@/services/marketplace.js'
-let market = new Marketplace();
-
 
 export default {
   name: 'AdminSettings',

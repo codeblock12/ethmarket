@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Blockchain from './services/blockchain';
 import Marketplace from './services/marketplace';
-import { NOTIFICATION_TIMEOUT, STOREFRONT } from './constants';
+import { NOTIFICATION_TIMEOUT } from './constants';
 
 let market = new Marketplace();
 let blockchain = new Blockchain();

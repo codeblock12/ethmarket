@@ -21,8 +21,6 @@ import { mapState } from "vuex";
 import StorefrontSettings from "@/components/StorefrontSettings";
 import BackNavigation from "@/components/BackNavigation";
 import ProductCard from "@/components/ProductCard";
-import { STOREFRONT } from "../constants";
-
 import Marketplace from "../services/marketplace.js";
 
 let market = new Marketplace();
@@ -54,8 +52,8 @@ export default {
     }
   },
   async mounted() {
-    await market.init();
-  	refreshProducts(this);
+		await market.init();
+		refreshProducts(this);
   }
 };
 
