@@ -64,13 +64,6 @@ contract('storefront', accounts => {
       assert.equal(deactivatedStorefront[STOREFRONT.IS_ACTIVE], false);
     })  
     
-    xit('should be able to withdraw ', async () => {})      
-  })
-
-  describe('when creating a product as a storefront owner', async () => {
-    xit('should create a product succesfully', () => {});
-    xit('should update the product id', () => {});
-    xit('should be able to update the product status', () => {});
   })
 
   describe('when buying products as a shopper', () => {
@@ -94,6 +87,5 @@ contract('storefront', accounts => {
       tryCatch(await storefront.buyProduct(0, 0, 1, {from: Shopper, value: 1000}));
     });
 
-    xit('should create an order of bought products', async() => {})
   })  
 })
