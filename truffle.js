@@ -14,8 +14,6 @@
 
 require('babel-register');
 require('babel-polyfill');
-let HDWalletProvider = require("truffle-hdwallet-provider");
-const mnemonic = "opinion destroy betray whale bored house paint one from address see next";
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -27,11 +25,9 @@ module.exports = {
       network_id: "*" // Match any network id
     },
     ropsten: { 
-      provider: function() { 
-        return new HDWalletProvider(mnemonic, 'https://ropsten.infura.io/', 0); 
-      },
-      network_id: "1", 
-      gas: 4500000 
+      host: "localhost",
+      port: 8545,
+      network_id: "3"
     },    
   },
   mocha: {
