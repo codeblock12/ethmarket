@@ -1,4 +1,11 @@
 {
-  "presets": ["es2015", "stage-2"],
-  "plugins": ["babel-plugin-transform-runtime"]
+  "env": {
+    "test": {
+      "presets": ["es2015", "stage-2"],
+      "plugins": ["babel-plugin-transform-runtime"]
+    },
+    "vue": {
+      "presets": ["@vue/app"]
+    }
+  }
 }
