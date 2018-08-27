@@ -14,7 +14,9 @@
 
 require('babel-register');
 require('babel-polyfill');
-
+let HDWalletProvider = require('truffle-hdwallet-provider');
+const mnemonic = 'opinion destroy betray whale bored house paint one from address see next';
+const infuraApi = 'https://ropsten.infura.io/v3/c148e3ccbc4e44caa8ccd4d31d5e285b';
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!  
@@ -22,10 +24,10 @@ module.exports = {
     development: {
       host: "127.0.0.1",
       port: 8545,
-      network_id: "*" // Match any network id
+      network_id: "*", // Match any network id
     },
     ropsten: { 
-      host: "localhost",
+      host: "127.0.0.1",
       port: 8546,
       network_id: "3"
     },    
