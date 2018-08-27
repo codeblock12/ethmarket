@@ -2,7 +2,7 @@
 import { ROLES } from '../src/constants'
 import { tryCatch } from '../helpers/test-helpers'
 
-const Core = artifacts.require('core');
+const Core = artifacts.require('Core');
 
 contract('Core', accounts => {
 

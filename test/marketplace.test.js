@@ -1,7 +1,7 @@
 
 import { ROLES } from '../src/constants'
 
-const Marketplace = artifacts.require('marketplace');
+const Marketplace = artifacts.require('Marketplace');
 
 contract('marketplace', accounts => {
 

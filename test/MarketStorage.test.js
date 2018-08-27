@@ -1,5 +1,3 @@
-const MarketStorage = artifacts.require('marketStorage');
-
 contract('marketStorage', accounts => {
 
   describe('when testing this storage contract', () => {

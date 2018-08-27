@@ -1,4 +1,4 @@
-export async function tryCatch(promise, message) {
+export async function tryCatch(promise) {
     try {
         await promise;
         throw null;

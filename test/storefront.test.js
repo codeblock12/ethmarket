@@ -74,18 +74,22 @@ contract('storefront', accounts => {
       await storefront.addAdmin(Admin, {from: Owner});
       await storefront.addStoreOwner(StoreOwner, {from: Admin});
       await storefront.createStorefront('mockStorefrontName', {from: StoreOwner}); 
-      await storefront.addProduct(0, 'mockProduct', 1000, 100, {from: StoreOwner});     
+      await storefront.addProduct(1, 'mockProduct', 1, 100, {from: StoreOwner});     
     })
 
     it('should be able to buy a product', async () => {
-      await storefront.buyProduct(0, 0, 1, {from: Shopper, value: 1000});
+      await storefront.buyProduct(1, 0, 2, {from: Shopper, value: 2});
       let orderCount = await storefront.getOrderCountByAddress.call(Shopper)
       assert.equal(orderCount, 1);
     })  
 
     it('should revert if not enough money is sent', async () => {
-      tryCatch(await storefront.buyProduct(0, 0, 1, {from: Shopper, value: 1000}));
+      await tryCatch(storefront.buyProduct(1, 0, 2, {from: Shopper, value: 1}));
     });
+
+    it('should revert if quantity bought is more than available', async () => {
+      await tryCatch(storefront.buyProduct(1, 0, 101, {from: Shopper, value: 200}));
+    });    
 
   })  
 })
